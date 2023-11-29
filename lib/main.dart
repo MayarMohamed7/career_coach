@@ -1,5 +1,5 @@
+import 'package:career_coach/screens/intro_page.dart';
 import 'package:flutter/material.dart';
-import 'package:career_coach/screens/login_page.dart';
 void main() {
   runApp(MyApp());
 }
@@ -10,7 +10,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Career Coach',
       //redirecthomePage
-      home: loginPage(),
+      home: WelcomePage(),
     );
   }
 }
