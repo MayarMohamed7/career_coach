@@ -19,13 +19,13 @@ class sessionPage extends StatelessWidget {
             itemCount: sessions.length,
             itemBuilder: (BuildContext context, int index) {
               return Padding(
-                  padding: const EdgeInsets.all(16),
+                  padding: const EdgeInsets.all(8),
                   child: Card(
                     child: ListTile(
                       title: Text(sessions[index].name),
                       subtitle: Text('${sessions[index].price} EGP'),
                       trailing: ElevatedButton(
-                        onPressed: null,
+                        onPressed: () {},
                         child: const Text('Reserve'),
                         style: ElevatedButton.styleFrom(
                           backgroundColor:
