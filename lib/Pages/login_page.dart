@@ -1,12 +1,61 @@
+
 import 'package:flutter/material.dart';
-import 'details.dart';
-import 'menu.dart';
-import 'signup_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:career_coach/Pages/signup_page.dart';
+import 'package:career_coach/resources/auth_methods.dart';
+import 'package:basic_utils/basic_utils.dart';
+import 'package:career_coach/utils/utils.dart';
+
 import 'home.dart';
+
 
 //loginPage
 
-class loginPage extends StatelessWidget {
+final _firebase= FirebaseAuth.instance;
+class loginPage extends StatefulWidget {
+  const loginPage({Key? key}) : super(key: key);
+  @override
+  _loginPageState createState() => _loginPageState();
+}
+
+class _loginPageState extends State<loginPage> {
+
+  final TextEditingController _emailController =TextEditingController();
+  final TextEditingController _passwordController=  TextEditingController() ; 
+    final FirebaseAuth _auth = FirebaseAuth.instance;
+  
+  @override
+  void dispose() {
+  
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+  
+  void loginUser() async {
+   
+
+    try {
+      String res = await AuthMethods().loginUser(
+        email: _emailController.text,
+        password: _passwordController.text,
+      );
+
+      if (res == "success") {
+        // Navigate to feed_screen.dart
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => HomePage()),
+        );
+      } else {
+      showSnackbar(res, context);
+      }
+    } catch (e) {
+      print("Login Error: $e");
+      showSnackbar("An error occurred during login",context);
+    } 
+
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -34,7 +83,7 @@ class loginPage extends StatelessWidget {
               SizedBox(height: 10),
               TextField(
                 decoration: InputDecoration(
-                  labelText: 'Username',
+                  labelText: 'Email',
                 ),
               ),
               SizedBox(height: 10),
@@ -68,23 +117,29 @@ class loginPage extends StatelessWidget {
                   ),
                 ],
               ),
-              ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => HomePage()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  primary: Color(0xff0f4f6c),
-                ),
-                child: Text('Login'),
-              ),
-              SizedBox(height: 20),
+             ElevatedButton(
+  onPressed: () {
+
+      loginUser();
+  }, 
+ 
+  child: Text('Login'),
+  style: ElevatedButton.styleFrom(
+    primary: Color(0xff0f4f6c), 
+    onPrimary: Colors.white, 
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(32.0), 
+    ),
+  )
+
+), 
+  
             ],
           ),
         ),
       ),
-    );
+    );                            
+
   }
+ 
 }
