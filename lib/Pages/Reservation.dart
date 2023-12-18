@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'menu.dart';
 
 class ReservationListPage extends StatelessWidget {
+  const ReservationListPage({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0f4f6c),
-        title: Text('Reservations'),
+        backgroundColor: const Color(0xff0f4f6c),
+        title: const Text('Reservations'),
       ),
       endDrawer: Drawer(
         child: DetailsPage(),
@@ -16,7 +18,7 @@ class ReservationListPage extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: ListView(
-          children: [
+          children: const [
             ReservationItem(
               reservationId: '123456',
               date: '2023-12-01',
@@ -52,6 +54,7 @@ class ReservationItem extends StatelessWidget {
   final String totalCost;
 
   const ReservationItem({
+    super.key,
     required this.reservationId,
     required this.date,
     required this.time,
@@ -64,8 +67,8 @@ class ReservationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      padding: EdgeInsets.all(16.0),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.all(16.0),
       decoration: BoxDecoration(
         border: Border.all(color: Color(0xff0f4f6c)),
         borderRadius: BorderRadius.circular(8.0),
@@ -75,16 +78,16 @@ class ReservationItem extends StatelessWidget {
         children: [
           Text(
             'Reservation ID: $reservationId',
-            style: TextStyle(fontWeight: FontWeight.bold),
+            style: const TextStyle(fontWeight: FontWeight.bold),
           ),
-          SizedBox(height: 8.0),
+          const SizedBox(height: 8.0),
           Text('Date: $date'),
           Text('Time: $time'),
           Text('Coach: $coachName'),
           Text('Status: $status'),
           Text('Payment Status: $paymentStatus'),
           Text('Total Cost: $totalCost'),
-          SizedBox(height: 16.0),
+          const SizedBox(height: 16.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -102,9 +105,9 @@ class ReservationItem extends StatelessWidget {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff0f4f6c),
+                  backgroundColor: const Color(0xff0f4f6c),
                 ),
-                child: Text('Change Date'),
+                child: const Text('Change Date'),
               ),
               ElevatedButton(
                 onPressed: () {
@@ -112,20 +115,20 @@ class ReservationItem extends StatelessWidget {
                     context: context,
                     builder: (BuildContext context) {
                       return AlertDialog(
-                        title: Text('Cancel Reservation'),
-                        content: Text('Are you sure you want to cancel?'),
+                        title: const Text('Cancel Reservation'),
+                        content: const Text('Are you sure you want to cancel?'),
                         actions: [
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('No'),
+                            child: const Text('No'),
                           ),
                           TextButton(
                             onPressed: () {
                               Navigator.pop(context);
                             },
-                            child: Text('Yes'),
+                            child: const Text('Yes'),
                           ),
                         ],
                       );
@@ -133,9 +136,9 @@ class ReservationItem extends StatelessWidget {
                   );
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Colors.red,
+                  backgroundColor: Colors.red,
                 ),
-                child: Text('Cancel'),
+                child: const Text('Cancel'),
               ),
             ],
           ),

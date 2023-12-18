@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:career_coach/components/buttons.dart';
-import 'login_page.dart';
+import 'package:career_coach/pages/login_page.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -8,7 +8,7 @@ class WelcomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(0xff0f4f6c),
+      backgroundColor: const Color(0xff0f4f6c),
       body: Padding(
         padding: const EdgeInsets.all(25.0),
         child: Column(
@@ -16,7 +16,7 @@ class WelcomePage extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.start,
           children: [
             // Web name
-            Text(
+            const Text(
               "Career Compass",
               style: TextStyle(
                 fontFamily: ('Roboto'),
@@ -36,7 +36,7 @@ class WelcomePage extends StatelessWidget {
             ),
 
             // Description
-            Text(
+            const Text(
               "Choose Your Suitable Career Path",
               style: TextStyle(
                 fontFamily: ('Roboto'),
@@ -47,18 +47,17 @@ class WelcomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 10),
-            Text(
+            const Text(
                 "Nowadays choosing a career isn't difficult that much, We Are Here To Help You !",
                 style: TextStyle(
                   color: Colors.white,
                   height: 2,
                 )),
             const SizedBox(height: 10),
-            MyButton(text: "Get Started"),
+            const MyButton(text: "Get Started"),
           ],
         ),
       ),
     );
   }
 }
-

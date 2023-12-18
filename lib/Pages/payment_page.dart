@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
 class PaymentPage extends StatefulWidget {
+  const PaymentPage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _PaymentPageState createState() => _PaymentPageState();
 }
 
@@ -18,23 +21,23 @@ class _PaymentPageState extends State<PaymentPage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          title: Text('Enter OTP'),
+          title: const Text('Enter OTP'),
           content: TextFormField(
             keyboardType: TextInputType.number,
-            decoration: InputDecoration(labelText: 'OTP'),
+            decoration: const InputDecoration(labelText: 'OTP'),
           ),
           actions: <Widget>[
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop(); // Cancel button
               },
-              child: Text('Cancel'),
+              child: const Text('Cancel'),
             ),
             TextButton(
               onPressed: () {
                 Navigator.of(context).pop();
               },
-              child: Text('Pay'),
+              child: const Text('Pay'),
             ),
           ],
         );
@@ -47,7 +50,7 @@ class _PaymentPageState extends State<PaymentPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff0f4f6c),
-        title: Text('Payment Form'),
+        title: const Text('Payment Form'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -58,7 +61,7 @@ class _PaymentPageState extends State<PaymentPage> {
             children: [
               TextFormField(
                 controller: cardHolderNameController,
-                decoration: InputDecoration(labelText: 'Cardholder Name'),
+                decoration: const InputDecoration(labelText: 'Cardholder Name'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter the cardholder name';
@@ -66,11 +69,11 @@ class _PaymentPageState extends State<PaymentPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: cardNumberController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'Card Number'),
+                decoration: const InputDecoration(labelText: 'Card Number'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a valid card number';
@@ -78,14 +81,15 @@ class _PaymentPageState extends State<PaymentPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               Row(
                 children: [
                   Expanded(
                     child: TextFormField(
                       controller: expiryMonthController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(labelText: 'Expiry Month'),
+                      decoration:
+                          const InputDecoration(labelText: 'Expiry Month'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter a valid expiry month';
@@ -94,12 +98,13 @@ class _PaymentPageState extends State<PaymentPage> {
                       },
                     ),
                   ),
-                  SizedBox(width: 16),
+                  const SizedBox(width: 16),
                   Expanded(
                     child: TextFormField(
                       controller: expiryYearController,
                       keyboardType: TextInputType.number,
-                      decoration: InputDecoration(labelText: 'Expiry Year'),
+                      decoration:
+                          const InputDecoration(labelText: 'Expiry Year'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Please enter a valid expiry year';
@@ -110,11 +115,11 @@ class _PaymentPageState extends State<PaymentPage> {
                   ),
                 ],
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               TextFormField(
                 controller: cvvController,
                 keyboardType: TextInputType.number,
-                decoration: InputDecoration(labelText: 'CVV'),
+                decoration: const InputDecoration(labelText: 'CVV'),
                 validator: (value) {
                   if (value == null || value.isEmpty) {
                     return 'Please enter a valid CVV';
@@ -122,7 +127,7 @@ class _PaymentPageState extends State<PaymentPage> {
                   return null;
                 },
               ),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               ElevatedButton(
                 onPressed: () {
                   if (_formKey.currentState!.validate()) {
@@ -130,9 +135,9 @@ class _PaymentPageState extends State<PaymentPage> {
                   }
                 },
                 style: ElevatedButton.styleFrom(
-                  primary: Color(0xff0f4f6c),
+                  backgroundColor: const Color(0xff0f4f6c),
                 ),
-                child: Text('Next'),
+                child: const Text('Next'),
               ),
             ],
           ),

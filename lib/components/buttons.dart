@@ -1,7 +1,6 @@
 import 'package:career_coach/Pages/login_page.dart';
 import 'package:flutter/material.dart';
 
-
 class MyButton extends StatelessWidget {
   final String text;
   const MyButton({Key? key, required this.text}) : super(key: key);

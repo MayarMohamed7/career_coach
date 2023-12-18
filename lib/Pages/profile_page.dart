@@ -5,7 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'menu.dart'; // Importing the font_awesome_flutter package
 
 class ProfilePage extends StatefulWidget {
+  const ProfilePage({super.key});
+
   @override
+  // ignore: library_private_types_in_public_api
   _ProfilePageState createState() => _ProfilePageState();
 }
 
@@ -18,7 +21,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff0f4f6c),
-        title: Text('Reservations'),
+        title: const Text('Reservations'),
       ),
       endDrawer: Drawer(
         child: DetailsPage(),
@@ -66,7 +69,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return CircleAvatar(
       radius: profileHeight / 2,
       backgroundColor: Colors.grey.shade800,
-      backgroundImage: NetworkImage(
+      backgroundImage: const NetworkImage(
           'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-File.png'),
     );
   }
@@ -75,11 +78,11 @@ class _ProfilePageState extends State<ProfilePage> {
     return Column(
       children: [
         const SizedBox(height: 8),
-        Text(
+        const Text(
           'John Doe',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
         ),
-        Text(
+        const Text(
           'Flutter Software Developer',
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
@@ -99,14 +102,14 @@ class _ProfilePageState extends State<ProfilePage> {
         ),
         Container(
           padding: EdgeInsets.symmetric(horizontal: 48),
-          child: Column(
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'about',
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text(
                 'flutter Software Developer with 2 years of experience in mobile application development. Skilled in AndroidFlutter, Firebase, Java, Kotlin, and Dart. Strong engineering professional with a Bachelor of Technology BTech focused in Computer Science from Lovely Professional University.',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
@@ -122,7 +125,7 @@ class _ProfilePageState extends State<ProfilePage> {
     return CircleAvatar(
       radius: 25,
       child: Material(
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         clipBehavior: Clip.hardEdge,
         color: Colors.transparent,
         child: InkWell(
@@ -138,4 +141,3 @@ class _ProfilePageState extends State<ProfilePage> {
     );
   }
 }
-

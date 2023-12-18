@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>API_KEY</key>
+	<string>AIzaSyAAd8L70g8qPEWhEZwlC0no94RAVhV99tY</string>
+	<key>GCM_SENDER_ID</key>
+	<string>703218765693</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.careerCoach.RunnerTests</string>
+	<key>PROJECT_ID</key>
+	<string>careercoachmobile</string>
+	<key>STORAGE_BUCKET</key>
+	<string>careercoachmobile.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:703218765693:ios:08ef28edf9246d2dbdc614</string>
+</dict>
+</plist>

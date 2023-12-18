@@ -6,17 +6,33 @@ import 'menu.dart';
 
 class SessionPage extends StatelessWidget {
   final List<Session> sessions = [
-    Session(name: 'Session with Iwan Ashton', price: 150),
-    Session(name: "Session with Lyra Fox", price: 450),
-    Session(name: "Session with Ali Othman", price: 300),
-    Session(name: "Session with Kenan Mohamed", price: 500)
+    Session(
+        name: 'Session with Iwan Ashton',
+        price: 150,
+        date: DateTime(2023, 3, 20),
+        time: const TimeOfDay(hour: 10, minute: 30)),
+    Session(
+        name: "Session with Lyra Fox",
+        price: 450,
+        date: DateTime(2023, 3, 20),
+        time: const TimeOfDay(hour: 10, minute: 30)),
+    Session(
+        name: "Session with Ali Othman",
+        price: 300,
+        date: DateTime(2023, 3, 20),
+        time: const TimeOfDay(hour: 10, minute: 30)),
+    Session(
+        name: "Session with Kenan Mohamed",
+        price: 500,
+        date: DateTime(2023, 3, 20),
+        time: const TimeOfDay(hour: 10, minute: 30)),
   ];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0f4f6c),
+        backgroundColor: const Color(0xff0f4f6c),
         title: const Text("Choose your session"),
       ),
       endDrawer: Drawer(
@@ -42,7 +58,7 @@ class SessionPage extends StatelessWidget {
                   },
                   child: const Text('Reserve'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff0f4f6c),
+                    backgroundColor: const Color(0xff0f4f6c),
                     foregroundColor: Colors.white,
                   ),
                 ),
@@ -58,13 +74,13 @@ class SessionPage extends StatelessWidget {
 class SessionDetailsPage extends StatelessWidget {
   final Session session;
 
-  SessionDetailsPage({required this.session});
+  const SessionDetailsPage({super.key, required this.session});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Session Details"),
+        title: const Text("Session Details"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),

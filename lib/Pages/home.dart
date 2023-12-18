@@ -8,7 +8,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff0f4f6c),
-        title: Text('Career Compass'),
+        title: const Text('Career Compass'),
       ),
       endDrawer: Drawer(
         child: DetailsPage(),
@@ -26,7 +26,7 @@ class HomePage extends StatelessWidget {
                 height: 300,
               ),
             ),
-            Text(
+            const Text(
               "Welcome to Career Compass",
               style: TextStyle(
                 fontSize: 24,
@@ -34,8 +34,8 @@ class HomePage extends StatelessWidget {
               ),
               textAlign: TextAlign.center,
             ),
-            SizedBox(height: 20),
-            Text(
+            const SizedBox(height: 20),
+            const Text(
               "We will help you find your best career path.",
               style: TextStyle(
                 fontSize: 16,
@@ -51,9 +51,9 @@ class HomePage extends StatelessWidget {
                 );
               },
               style: ElevatedButton.styleFrom(
-                primary: Color(0xff0f4f6c),
+                backgroundColor: Color(0xff0f4f6c),
               ),
-              child: Text("Show Available Sessions"),
+              child: const Text("Show Available Sessions"),
             ),
           ],
         ),
@@ -61,4 +61,3 @@ class HomePage extends StatelessWidget {
     );
   }
 }
-

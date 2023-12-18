@@ -13,15 +13,14 @@ class signupPage extends StatefulWidget {
   @override
   _signupPageState createState() => _signupPageState();
 }
-class _signupPageState extends State<signupPage> {
 
+class _signupPageState extends State<signupPage> {
   final TextEditingController _firstNameController = TextEditingController();
- final TextEditingController _lastNameController = TextEditingController() ;
- final TextEditingController _phoneNumberController = TextEditingController() ;
-  final TextEditingController _emailController =TextEditingController();
-  final TextEditingController _passwordController=  TextEditingController() ; 
-  
-  
+  final TextEditingController _lastNameController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+
   @override
   void dispose() {
     _firstNameController.dispose();
@@ -32,13 +31,12 @@ class _signupPageState extends State<signupPage> {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0f4f6c),
-        title: Text('Career Compass'),
+        backgroundColor: const Color(0xff0f4f6c),
+        title: const Text('Career Compass'),
       ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -48,7 +46,7 @@ class _signupPageState extends State<signupPage> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
-              Text(
+              const Text(
                 'Career Compass',
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
@@ -57,12 +55,10 @@ class _signupPageState extends State<signupPage> {
               ),
               SizedBox(height: 10),
               TextField(
-              
                 controller: _firstNameController,
                 decoration: InputDecoration(
-                  hintText: 'Enter your Firstname', 
+                  hintText: 'Enter your Firstname',
                   labelText: 'Firstname',
-    
                 ),
               ),
               SizedBox(height: 10),
@@ -83,37 +79,32 @@ class _signupPageState extends State<signupPage> {
               ),
               SizedBox(height: 10),
               TextField(
-             
                 controller: _emailController,
                 decoration: InputDecoration(
-              hintText:'Enter your Email',
+                  hintText: 'Enter your Email',
                   labelText: 'Email',
                 ),
               ),
-              SizedBox(height: 10),
-              TextField(
-                controller: _passwordController,
-                
+              const SizedBox(height: 10),
+              const TextField(
                 obscureText: true,
                 decoration: InputDecoration(
                   hintText: 'Enter your Password',
                   labelText: 'Password',
                 ),
               ),
-             
               SizedBox(height: 20),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
-                  Text('already have an account?'),
-                  SizedBox(width: 10),
+                  const Text('already have an account?'),
+                  const SizedBox(width: 10),
                   GestureDetector(
-                    
                     onTap: () {
                       Navigator.push(context,
                           MaterialPageRoute(builder: (context) => loginPage()));
                     },
-                    child: Text(
+                    child: const Text(
                       'Login',
                       style: TextStyle(
                         color: Color(0xff0f4f6c),
@@ -124,35 +115,35 @@ class _signupPageState extends State<signupPage> {
                   ),
                 ],
               ),
-          InkWell(
-  onTap: () async {
-    String res = await AuthMethods().signupUser(
-      email: _emailController.text.trim(),
-      password: _passwordController.text.trim(),
-      Firstname: _firstNameController.text.trim(),
-      Lastname: _lastNameController.text.trim(),
-    );
-    print(res);
-     if (res == "success") {
-      Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-  }
-  }, 
-
-  child: Container(
-    padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-    decoration: BoxDecoration(
-      color: Color(0xff0f4f6c),
-      borderRadius: BorderRadius.circular(5.0),
-    ),
-    child: Text(
-      'Sign up',
-      style: TextStyle(color: Colors.white),
-    ),
-  ),
-),
+              InkWell(
+                onTap: () async {
+                  String res = await AuthMethods().signupUser(
+                    email: _emailController.text.trim(),
+                    password: _passwordController.text.trim(),
+                    Firstname: _firstNameController.text.trim(),
+                    Lastname: _lastNameController.text.trim(),
+                  );
+                  print(res);
+                  if (res == "success") {
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(builder: (context) => HomePage()),
+                    );
+                  }
+                },
+                child: Container(
+                  padding:
+                      EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+                  decoration: BoxDecoration(
+                    color: Color(0xff0f4f6c),
+                    borderRadius: BorderRadius.circular(5.0),
+                  ),
+                  child: Text(
+                    'Sign up',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ),
               SizedBox(height: 20),
             ],
           ),
@@ -161,5 +152,3 @@ class _signupPageState extends State<signupPage> {
     );
   }
 }
-
-  
