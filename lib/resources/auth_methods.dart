@@ -1,72 +1,102 @@
-import 'package:career_coach/Pages/signup_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+//auth methods 
+class AuthService {
 
-class AuthMethods
-{
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-//for sign up new user 
-   Future <String>  signupUser ({
-    required String email,
-      required String password , 
-      required String Firstname ,
-       required String Lastname}) async
-  {
-  String res = 'some error occured'; 
-  try{
-    if(email.isNotEmpty || password.isNotEmpty || Firstname.isNotEmpty || Lastname.isNotEmpty)
-    {
-    UserCredential cred =   await _auth.createUserWithEmailAndPassword(email: email, password: password);
-    print(cred.user!.uid);
-    //add user to our database 
-     await _firestore.collection('users').add({ 
-      'email': email,
-      'uid': cred.user!.uid,
-      'password': password,
-      'Firstname': Firstname,
-      'Lastname': Lastname,
-    });
-    //
-res= 'success'; 
-    }
-    else
-    {
-      res = 'please enter all the fields';
-    }
+final FirebaseAuth _auth = FirebaseAuth.instance;
+final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  } catch(err)
-  {
-res = err.toString();
-  }
-return res;
+  
+
+  // Sign in with email and password
+  Future<String?> signInWithEmailAndPassword(
+      {required String email, required String password}) async {
+    try {
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+      return null; // Return null if login is successful
+    } catch (e) {
+      return e.toString(); // Return the error message if login fails
+    }
   }
 
-  // for login user
- Future<String> loginUser({
+  // Sign up with email and password
+  
+  Future<String?> signUpCoachWithEmailAndPassword({
     required String email,
     required String password,
+    required String firstName,
+    required String lastName,
+    required String phoneNumber,
+    required String yearsOfExperience,
+    
   }) async {
-    String res = "Error Occurred";
     try {
-      if (email.isNotEmpty && password.isNotEmpty) {
-        // logging in user with email and password
-        await _auth.signInWithEmailAndPassword(
-          email: email,
-          password: password,
-        );
-        res = "success";
-      } else {
-        res = "Please enter all the fields";
-      }
-    } catch (err) {
-      res = "Error: ${err.toString()}";
-    }
-    return res;
-  }
+      // Create user with email and password
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
 
-//signing out
+      // Get the user's UID
+      String? uid = userCredential.user?.uid;
+
+      if (uid != null) {
+        // Save user data to Firestore in the 'coaches' collection
+        await _firestore.collection('coaches').doc(uid).set({
+          'email': email,
+          'firstName': firstName,
+          'lastName': lastName,
+          'phoneNumber': phoneNumber,
+          'yearsOfExperience': yearsOfExperience,
+        });
+
+        return null; // Return null if signup is successful
+      } else {
+        return 'Failed to create user'; // Return error if UID is null
+      }
+    } catch (e) {
+      return e.toString(); // Return the error message if signup fails
+    }
+  }
+Future<String?> signUpUserWithEmailAndPassword({
+    required String email,
+    required String password,
+    required String firstName,
+    required String lastName,
+    required String phoneNumber,
+
+    
+  }) async {
+    try {
+      // Create user with email and password
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+
+      // Get the user's UID
+      String? uid = userCredential.user?.uid;
+
+      if (uid != null) {
+        // Save user data to Firestore in the 'coaches' collection
+        await _firestore.collection('coaches').doc(uid).set({
+          'email': email,
+          'firstName': firstName,
+          'lastName': lastName,
+          'phoneNumber': phoneNumber,
+        
+        });
+
+        return null; // Return null if signup is successful
+      } else {
+        return 'Failed to create user'; // Return error if UID is null
+      }
+    } catch (e) {
+      return e.toString(); // Return the error message if signup fails
+    }
+  }
+  // Sign out
   Future<void> signOut() async {
     await _auth.signOut();
   }
