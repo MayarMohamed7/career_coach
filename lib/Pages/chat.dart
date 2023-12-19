@@ -2,14 +2,18 @@ import 'package:flutter/material.dart';
 
 class ChatScreen extends StatefulWidget {
   @override
+  //creating an instace from a chatscreen to call it in other pages
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
+  //managing text input
   TextEditingController messageController = TextEditingController();
+  //list holds chat messages as widget element
   List<Widget> chatMessages = [];
 
   void sendMessage() {
+    //sending message logic and updating the chat
     String message = messageController.text;
     if (message.isNotEmpty) {
       setState(() {
