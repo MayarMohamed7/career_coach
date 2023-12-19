@@ -1,6 +1,6 @@
+import 'package:career_coach/Pages/CoachesPage.dart';
 import 'package:flutter/material.dart';
 import 'menu.dart';
-import 'sessionsPage.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -47,13 +47,13 @@ class HomePage extends StatelessWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => SessionPage()),
+                  MaterialPageRoute(builder: (context) => CoachesPage()),
                 );
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xff0f4f6c),
-              ),
-              child: const Text("Show Available Sessions"),
+                  backgroundColor: Color(0xff0f4f6c),
+                  foregroundColor: Colors.white),
+              child: const Text("Show Available Coaches"),
             ),
           ],
         ),

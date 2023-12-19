@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:career_coach/models/Session.dart';
@@ -17,6 +18,7 @@ class _NewSessionState extends State<NewSession> {
   final _priceController = TextEditingController();
   DateTime _selectedDate = DateTime.now();
   TimeOfDay selectedTime = TimeOfDay.now();
+  //final coach = FirebaseAuth.instance.currentUser!;
 
   void _selectDate() async {
     final now = DateTime.now();
@@ -49,6 +51,7 @@ class _NewSessionState extends State<NewSession> {
         'price': _priceController.text,
         'date': DateFormat('dd-MM-yyyy').format(_selectedDate),
         'time': selectedTime.format(context),
+        'coachId': FirebaseAuth.instance.currentUser!.uid,
         'status': 'available'
       });
       // Clear the input fields
