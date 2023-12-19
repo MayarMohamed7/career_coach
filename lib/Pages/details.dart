@@ -1,76 +1,74 @@
+import 'package:career_coach/Pages/menu.dart';
 import 'package:career_coach/Pages/payment_page.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
-import 'menu.dart';
+import 'chat.dart';
 
-class coachsessionsPage extends StatefulWidget {
-  const coachsessionsPage({super.key});
-
-  @override
-  State<coachsessionsPage> createState() => _coachingsessionsPageState();
-}
-
-class _coachingsessionsPageState extends State<coachsessionsPage> {
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final CollectionReference _sessions =
-      FirebaseFirestore.instance.collection('sessions');
-
+class CoachingSessionPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(0xff0f4f6c),
-          title: Text('Coaching Sessions'),
+      appBar: AppBar(
+        backgroundColor: Color(0xff0f4f6c),
+        title: Text('Coaching Session Details'),
+      ),
+      endDrawer: Drawer(
+        child: DetailsPage(),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              'Coach Name: John Doe',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 8),
+            Text('Working hours : Sunday - Thursday (9:00AM - 3:00PM)'),
+            SizedBox(height: 8),
+            Text('Coach Rating: 4.5/5'),
+            SizedBox(height: 8),
+            Text('Price: \$50'),
+            SizedBox(height: 8),
+            Text('Awards: Best Coach of the Year, 2022'),
+            SizedBox(height: 8),
+            Text(
+              'About the Coach:',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
+            Text(
+              'John Doe is a highly experienced coach with a proven track record of helping individuals achieve their goals. He has received numerous awards for his outstanding contributions to the coaching community.',
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PaymentPage()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xff0f4f6c),
+              ),
+              child: Text('Make Payment'),
+            ),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => ChatScreen()),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                primary: Color(0xff0f4f6c),
+              ),
+              child: Text('Start Chat'),
+            ),
+          ],
         ),
-        body: StreamBuilder(
-            stream: FirebaseFirestore.instance
-                .collection('sessions')
-                .where('status', isEqualTo: 'available')
-                .snapshots(),
-            builder: (context, snapshot) {
-              if (!snapshot.hasData) {
-                return CircularProgressIndicator();
-              }
-              var sessions = snapshot.data!.docs;
-              return ListView.builder(
-                  itemCount: sessions.length,
-                  itemBuilder: (context, index) {
-                    var session = sessions[index].data();
-                    var sessionId = sessions[index].id;
-                    return Card(
-                        child: ListTile(
-                      leading: Icon(Icons.business_center_outlined),
-                      title: Text('\$${session['price']}'),
-                      subtitle: Row(
-                        children: [
-                          Icon(Icons.calendar_today),
-                          SizedBox(width: 4),
-                          Text(session['date']),
-                          SizedBox(width: 10),
-                          Icon(Icons.access_time),
-                          SizedBox(width: 4),
-                          Text(session['time']),
-                        ],
-                      ),
-                      trailing: ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) =>
-                                  PaymentPage(sessionId: sessionId),
-                            ),
-                          );
-                        },
-                        child: const Text('Reserve'),
-                        style: ElevatedButton.styleFrom(
-                          backgroundColor: const Color(0xff0f4f6c),
-                          foregroundColor: Colors.white,
-                        ),
-                      ),
-                    ));
-                  });
-            }));
+      ),
+    );
   }
 }
