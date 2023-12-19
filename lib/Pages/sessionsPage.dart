@@ -4,6 +4,7 @@ import 'package:career_coach/models/Session.dart';
 import 'details.dart';
 import 'menu.dart';
 
+//change to coaches page
 class SessionPage extends StatelessWidget {
   final List<Session> sessions = [
     Session(
@@ -52,7 +53,7 @@ class SessionPage extends StatelessWidget {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CoachingSessionPage(),
+                        builder: (context) => coachsessionsPage(),
                       ),
                     );
                   },

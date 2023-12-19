@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:career_coach/models/Session.dart';
 
-final formatter = DateFormat.yMd();
+final formatter = DateFormat('dd-MM-yyyy');
 
 class NewSession extends StatefulWidget {
   const NewSession({super.key});
@@ -21,11 +21,13 @@ class _NewSessionState extends State<NewSession> {
   void _selectDate() async {
     final now = DateTime.now();
     final firstDate = DateTime(now.year - 1, now.month, now.day);
+    final lastDate = DateTime(now.year + 1, now.month,
+        now.day); // to be able to choose date up to a year from now
     final picked = await showDatePicker(
         context: context,
         initialDate: now,
         firstDate: firstDate,
-        lastDate: now);
+        lastDate: lastDate);
     setState(() {
       _selectedDate = picked!;
     });
@@ -47,6 +49,7 @@ class _NewSessionState extends State<NewSession> {
         'price': _priceController.text,
         'date': DateFormat('dd-MM-yyyy').format(_selectedDate),
         'time': selectedTime.format(context),
+        'status': 'available'
       });
       // Clear the input fields
       _priceController.clear();
@@ -56,48 +59,69 @@ class _NewSessionState extends State<NewSession> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Enter Session Details')),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            TextFormField(
-              controller: _priceController,
-              decoration: const InputDecoration(
-                labelText: 'Enter price',
-                prefixText: '\$',
+      appBar: AppBar(
+        title: const Text('Enter Session Details'),
+        backgroundColor: Color(0xff0f4f6c),
+      ),
+      body: SingleChildScrollView(
+        // Makes the form scrollable
+        padding: const EdgeInsets.all(16.0),
+        child: Form(
+          key: _formKey,
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              TextFormField(
+                controller: _priceController,
+                decoration: InputDecoration(
+                  labelText: 'Enter price',
+                  prefixText: '\$',
+                  border: OutlineInputBorder(), // Adds border
+                ),
+                keyboardType: TextInputType.number,
+                validator: (value) =>
+                    value!.isEmpty ? 'Please enter a price' : null,
               ),
-              validator: (value) {
-                if (value == null || value.isEmpty) {
-                  return 'Please enter some text';
-                }
-                return null;
-              },
-            ),
-            Text(_selectedDate == null
-                ? 'No date Selected'
-                : formatter
-                    .format(_selectedDate!)), //! means vlue never be null
-            IconButton(
-              onPressed: _selectDate,
-              icon: const Icon(
-                Icons.calendar_month,
-              ), // Icon
-            ),
-
-            Text("Time: ${selectedTime.format(context)}"),
-            IconButton(
-              onPressed: _selectTime,
-              icon: const Icon(
-                Icons.access_alarm,
-              ), // Icon
-            ),
-            ElevatedButton(
-              onPressed: _selectTime,
-              child: const Text('Save Session'),
-            ),
-          ],
+              SizedBox(height: 20),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Date: ${formatter.format(_selectedDate)}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: _selectDate,
+                    icon: Icon(Icons.calendar_today),
+                  ),
+                ],
+              ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      'Time: ${selectedTime.format(context)}',
+                      style: TextStyle(fontSize: 16),
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: _selectTime,
+                    icon: Icon(Icons.access_time),
+                  ),
+                ],
+              ),
+              SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _saveSession,
+                child: const Text('Save Session'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: const Color(0xff0f4f6c),
+                  foregroundColor: Colors.white,
+                ),
+              ),
+            ],
+          ),
         ),
       ),
     );
