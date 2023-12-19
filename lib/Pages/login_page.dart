@@ -1,9 +1,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:career_coach/Pages/signup_page.dart';
+import 'package:career_coach/Pages/signupUser_page.dart';
+import 'package:career_coach/Pages/signupCoach_page.dart';
 import 'package:career_coach/resources/auth_methods.dart';
-import 'package:basic_utils/basic_utils.dart';
 import 'package:career_coach/utils/utils.dart';
 
 import 'home.dart';
@@ -32,30 +32,7 @@ class _loginPageState extends State<loginPage> {
     super.dispose();
   }
   
-  void loginUser() async {
-   
 
-    try {
-      String res = await AuthMethods().loginUser(
-        email: _emailController.text,
-        password: _passwordController.text,
-      );
-
-      if (res == "success") {
-        // Navigate to feed_screen.dart
-        Navigator.pushReplacement(
-          context,
-          MaterialPageRoute(builder: (context) => HomePage()),
-        );
-      } else {
-      showSnackbar(res, context);
-      }
-    } catch (e) {
-      print("Login Error: $e");
-      showSnackbar("An error occurred during login",context);
-    } 
-
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -104,7 +81,7 @@ class _loginPageState extends State<loginPage> {
                       Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => signupPage()));
+                              builder: (context) => SignupPageUser()));
                     },
                     child: Text(
                       'Sign up',
@@ -118,10 +95,33 @@ class _loginPageState extends State<loginPage> {
                 ],
               ),
              ElevatedButton(
-  onPressed: () {
+  onPressed: () async{
 
-      loginUser();
-  }, 
+        String? signInResult = await AuthService().signInWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
+    );
+
+    if (signInResult == null) {
+      // Sign-in successful, navigate to the home page or perform actions
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => HomePage()),
+      );
+    } else {
+      // Sign-in failed, show an error message or handle the error
+      print("Sign-in failed: $signInResult");
+      
+      // Show an error message using ScaffoldMessenger's snackbar
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Sign-in failed: $signInResult"),
+          duration: Duration(seconds: 3), // Adjust the duration as needed
+        ),
+      );
+    }
+  },
+
  
   child: Text('Login'),
   style: ElevatedButton.styleFrom(
