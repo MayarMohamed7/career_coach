@@ -23,15 +23,9 @@ class DefaultFirebaseOptions {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for windows - '
@@ -51,7 +45,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyCicR_DiOvyx9dl8mHaxTmCFzBKBsm9XhU',
-    appId: '1:703218765693:web:944bb52fc6da0540bdc614',
+    appId: '1:703218765693:web:db02f4dd0ced8b15bdc614',
     messagingSenderId: '703218765693',
     projectId: 'careercoachmobile',
     authDomain: 'careercoachmobile.firebaseapp.com',
@@ -66,5 +60,25 @@ class DefaultFirebaseOptions {
     projectId: 'careercoachmobile',
     databaseURL: 'https://careercoachmobile-default-rtdb.firebaseio.com',
     storageBucket: 'careercoachmobile.appspot.com',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyAAd8L70g8qPEWhEZwlC0no94RAVhV99tY',
+    appId: '1:703218765693:ios:f055978634e4daaebdc614',
+    messagingSenderId: '703218765693',
+    projectId: 'careercoachmobile',
+    databaseURL: 'https://careercoachmobile-default-rtdb.firebaseio.com',
+    storageBucket: 'careercoachmobile.appspot.com',
+    iosBundleId: 'com.example.careerCoach',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyAAd8L70g8qPEWhEZwlC0no94RAVhV99tY',
+    appId: '1:703218765693:ios:08ef28edf9246d2dbdc614',
+    messagingSenderId: '703218765693',
+    projectId: 'careercoachmobile',
+    databaseURL: 'https://careercoachmobile-default-rtdb.firebaseio.com',
+    storageBucket: 'careercoachmobile.appspot.com',
+    iosBundleId: 'com.example.careerCoach.RunnerTests',
   );
 }
