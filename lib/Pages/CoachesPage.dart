@@ -1,4 +1,5 @@
 import 'package:career_coach/Pages/SessionPage.dart';
+import 'package:career_coach/Pages/menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
@@ -21,6 +22,9 @@ class _CoachesPageState extends State<CoachesPage> {
         appBar: AppBar(
           backgroundColor: Color(0xff0f4f6c),
           title: Text('Coaches'),
+        ),
+        endDrawer: Drawer(
+          child: DetailsPage(),
         ),
         body: StreamBuilder(
             stream:

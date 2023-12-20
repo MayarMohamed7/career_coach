@@ -25,6 +25,9 @@ class _coachingsessionsPageState extends State<coachsessionsPage> {
         backgroundColor: Color(0xff0f4f6c),
         title: Text('Coaching Sessions'),
       ),
+      endDrawer: Drawer(
+        child: DetailsPage(),
+      ),
       body: Column(
         children: [
           Row(
