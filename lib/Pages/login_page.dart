@@ -10,7 +10,7 @@ import 'home.dart';
 
 
 //loginPage
-
+//loginPageUpdated. //
 final _firebase= FirebaseAuth.instance;
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);

@@ -1,13 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-//auth methods ///
+
 class AuthService {
-
-final FirebaseAuth _auth = FirebaseAuth.instance;
-final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-
-  
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
   // Sign in with email and password
   Future<String?> signInWithEmailAndPassword(
@@ -21,7 +18,7 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
   }
 
   // Sign up with email and password
-  
+
   Future<String?> signUpCoachWithEmailAndPassword({
     required String email,
     required String password,
@@ -29,11 +26,11 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
     required String lastName,
     required String phoneNumber,
     required String yearsOfExperience,
-    
   }) async {
     try {
       // Create user with email and password
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -59,18 +56,18 @@ final FirebaseFirestore _firestore = FirebaseFirestore.instance;
       return e.toString(); // Return the error message if signup fails
     }
   }
-Future<String?> signUpUserWithEmailAndPassword({
+
+  Future<String?> signUpUserWithEmailAndPassword({
     required String email,
     required String password,
     required String firstName,
     required String lastName,
     required String phoneNumber,
-
-    
   }) async {
     try {
       // Create user with email and password
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
@@ -80,12 +77,11 @@ Future<String?> signUpUserWithEmailAndPassword({
 
       if (uid != null) {
         // Save user data to Firestore in the 'coaches' collection
-        await _firestore.collection('coaches').doc(uid).set({
+        await _firestore.collection('users').doc(uid).set({
           'email': email,
           'firstName': firstName,
           'lastName': lastName,
           'phoneNumber': phoneNumber,
-        
         });
 
         return null; // Return null if signup is successful
@@ -96,6 +92,7 @@ Future<String?> signUpUserWithEmailAndPassword({
       return e.toString(); // Return the error message if signup fails
     }
   }
+
   // Sign out
   Future<void> signOut() async {
     await _auth.signOut();
