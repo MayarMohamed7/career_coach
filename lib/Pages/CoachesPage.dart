@@ -38,7 +38,7 @@ class _CoachesPageState extends State<CoachesPage> {
                     return Card(
                         child: ListTile(
                       leading: Icon(Icons.business_center_outlined),
-                      title: Text('\$${coach['firstName']}'),
+                      title: Text('${coach['firstName']}'),
                       /*subtitle: Row(
                         children: [
                           Icon(Icons.calendar_today),
