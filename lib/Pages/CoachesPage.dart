@@ -3,7 +3,8 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 
 class CoachesPage extends StatefulWidget {
-  const CoachesPage({super.key});
+  final String? coachName;
+  const CoachesPage({super.key, this.coachName});
 
   @override
   State<CoachesPage> createState() => _CoachesPageState();
@@ -54,8 +55,11 @@ class _CoachesPageState extends State<CoachesPage> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  coachsessionsPage(coachId: coachId),
+                              builder: (context) => coachsessionsPage(
+                                coachId: coachId,
+                                coachName:
+                                    coach['firstName'] ?? 'No Coach Name',
+                              ),
                             ),
                           );
                         },

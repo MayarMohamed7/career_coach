@@ -12,22 +12,15 @@ class SignupPageUser extends StatefulWidget {
 }
 
 class _SignupPageUserState extends State<SignupPageUser> {
-  
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _firstnameController = TextEditingController();
+  final TextEditingController _lastnameController = TextEditingController();
 
-  final TextEditingController _emailController =TextEditingController();
-  final TextEditingController _passwordController=  TextEditingController() ; 
-   final TextEditingController _firstnameController =TextEditingController();
-  final TextEditingController _lastnameController =TextEditingController();
+  final TextEditingController _phoneController = TextEditingController();
 
-  final TextEditingController _phoneController =TextEditingController();
+  //bool _isLoading = false;
 
-
-
-
-
-   //bool _isLoading = false;
-    
-  
   @override
   void dispose() {
     super.dispose();
@@ -36,10 +29,8 @@ class _SignupPageUserState extends State<SignupPageUser> {
     _firstnameController.dispose();
     _lastnameController.dispose();
     _phoneController.dispose();
-   
-    
-  
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,8 +56,8 @@ class _SignupPageUserState extends State<SignupPageUser> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
-                      keyboardType: TextInputType.text,
-                      controller: _firstnameController,
+                  keyboardType: TextInputType.text,
+                  controller: _firstnameController,
                   decoration: InputDecoration(
                     hintText: 'Enter your Firstname',
                     labelText: 'Firstname',
@@ -74,14 +65,13 @@ class _SignupPageUserState extends State<SignupPageUser> {
                 ),
                 SizedBox(height: 10),
                 TextFormField(
-                    keyboardType: TextInputType.text,
-                    controller: _lastnameController ,
+                  keyboardType: TextInputType.text,
+                  controller: _lastnameController,
                   decoration: InputDecoration(
                     hintText: 'Enter your Lastname',
                     labelText: 'Lastname',
                   ),
                 ),
-           
                 SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
@@ -135,32 +125,32 @@ class _SignupPageUserState extends State<SignupPageUser> {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                   onPressed: () async {
-    String? signUpResult = await AuthService(). signUpUserWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-      firstName: _firstnameController.text,
-      lastName: _lastnameController.text,
-      phoneNumber: _phoneController.text,
- 
-      
-    );
+                  onPressed: () async {
+                    String? signUpResult =
+                        await AuthService().signUpUserWithEmailAndPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                      firstName: _firstnameController.text,
+                      lastName: _lastnameController.text,
+                      phoneNumber: _phoneController.text,
+                    );
 
-    // Check the signup result and perform actions accordingly
-    if (signUpResult == null) {
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => ProfilePageUser()),
-      );
-    } else {
-      // Signup failed, show an error message or handle the error
-      print("Signup failed: $signUpResult");
-    }
-  },
+                    // Check the signup result and perform actions accordingly
+                    if (signUpResult == null) {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => ProfilePageUser()),
+                      );
+                    } else {
+                      // Signup failed, show an error message or handle the error
+                      print("Signup failed: $signUpResult");
+                    }
+                  },
                   child: Text('Sign Up'),
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xff0f4f6c),
-                    onPrimary: Colors.white,
+                    backgroundColor: Color(0xff0f4f6c),
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0),
                     ),

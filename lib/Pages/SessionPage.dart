@@ -8,8 +8,11 @@ import 'menu.dart';
 
 class coachsessionsPage extends StatefulWidget {
   final String coachId;
+  final String coachName;
 
-  const coachsessionsPage({Key? key, required this.coachId}) : super(key: key);
+  const coachsessionsPage(
+      {Key? key, required this.coachId, required this.coachName})
+      : super(key: key);
   @override
   State<coachsessionsPage> createState() => _coachingsessionsPageState();
 }
@@ -100,8 +103,9 @@ class _coachingsessionsPageState extends State<coachsessionsPage> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) =>
-                                    PaymentPage(sessionId: sessionId),
+                                builder: (context) => PaymentPage(
+                                    sessionId: sessionId,
+                                    coachName: widget.coachName),
                               ),
                             );
                           },

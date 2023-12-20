@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart'; 
+import 'package:flutter/cupertino.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'menu.dart'; // Importing the font_awesome_flutter package
 
 class ProfilePageCoach extends StatefulWidget {
   @override
-  _ProfilePageCoachState createState() =>   _ProfilePageCoachState ();
+  _ProfilePageCoachState createState() => _ProfilePageCoachState();
 }
 
-class  _ProfilePageCoachState  extends State<ProfilePageCoach> {
+class _ProfilePageCoachState extends State<ProfilePageCoach> {
   final double coverHeight = 280;
   final double profileHeight = 144;
 
@@ -18,7 +18,7 @@ class  _ProfilePageCoachState  extends State<ProfilePageCoach> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff0f4f6c),
-        title: Text('Reservations'),
+        title: Text('Profile'),
       ),
       endDrawer: Drawer(
         child: DetailsPage(),
@@ -138,4 +138,3 @@ class  _ProfilePageCoachState  extends State<ProfilePageCoach> {
     );
   }
 }
-

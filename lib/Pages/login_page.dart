@@ -1,17 +1,17 @@
-
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:career_coach/Pages/signupUser_page.dart';
 import 'package:career_coach/Pages/signupCoach_page.dart';
 import 'package:career_coach/resources/auth_methods.dart';
 import 'package:career_coach/utils/utils.dart';
+import 'package:career_coach/Pages/newSession.dart';
 
 import 'home.dart';
 
-
 //loginPage
 
-final _firebase= FirebaseAuth.instance;
+final _firebase = FirebaseAuth.instance;
+
 class loginPage extends StatefulWidget {
   const loginPage({Key? key}) : super(key: key);
   @override
@@ -19,19 +19,16 @@ class loginPage extends StatefulWidget {
 }
 
 class _loginPageState extends State<loginPage> {
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  final TextEditingController _emailController =TextEditingController();
-  final TextEditingController _passwordController=  TextEditingController() ; 
-    final FirebaseAuth _auth = FirebaseAuth.instance;
-  
   @override
   void dispose() {
-  
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
   }
-  
 
   @override
   Widget build(BuildContext context) {
@@ -59,14 +56,18 @@ class _loginPageState extends State<loginPage> {
               ),
               SizedBox(height: 10),
               TextField(
+                controller: _emailController,
                 decoration: InputDecoration(
+                  hintText: 'enter your email',
                   labelText: 'Email',
                 ),
               ),
               SizedBox(height: 10),
               TextField(
+                controller: _passwordController,
                 obscureText: true,
                 decoration: InputDecoration(
+                  hintText: 'enter your password',
                   labelText: 'Password',
                 ),
               ),
@@ -94,52 +95,64 @@ class _loginPageState extends State<loginPage> {
                   ),
                 ],
               ),
-             ElevatedButton(
-  onPressed: () async{
+              ElevatedButton(
+                  onPressed: () async {
+                    String? signInResult =
+                        await AuthService().signInWithEmailAndPassword(
+                      email: _emailController.text,
+                      password: _passwordController.text,
+                    );
 
-        String? signInResult = await AuthService().signInWithEmailAndPassword(
-      email: _emailController.text,
-      password: _passwordController.text,
-    );
+                    if (signInResult == null) {
+                      // Check if the user exists in the 'users' collection
+                      bool isUser = await AuthService()
+                          .checkIfUserExists(_emailController.text);
 
-    if (signInResult == null) {
-      // Sign-in successful, navigate to the home page or perform actions
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (context) => HomePage()),
-      );
-    } else {
-      // Sign-in failed, show an error message or handle the error
-      print("Sign-in failed: $signInResult");
-      
-      // Show an error message using ScaffoldMessenger's snackbar
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Sign-in failed: $signInResult"),
-          duration: Duration(seconds: 3), // Adjust the duration as needed
-        ),
-      );
-    }
-  },
+                      // Check if the user exists in the 'coaches' collection
+                      bool isCoach = await AuthService()
+                          .checkIfCoachExists(_emailController.text);
 
- 
-  child: Text('Login'),
-  style: ElevatedButton.styleFrom(
-    primary: Color(0xff0f4f6c), 
-    onPrimary: Colors.white, 
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(32.0), 
-    ),
-  )
+                      if (isUser) {
+                        // Redirect to home page if the user exists in the 'users' collection
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => HomePage()),
+                        );
+                      } else if (isCoach) {
+                        // Redirect to the new session page if the user exists in the 'coaches' collection
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => NewSession()),
+                        );
+                      } else {
+                        // Handle scenario where the user is neither in 'users' nor 'coaches'
+                        print('User not found in either table');
+                      }
+                    } else {
+                      // Sign-in failed, show an error message or handle the error
+                      print("Sign-in failed: $signInResult");
 
-), 
-  
+                      // Show an error message using ScaffoldMessenger's snackbar
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Sign-in failed: $signInResult"),
+                          duration: Duration(seconds: 3),
+                        ),
+                      );
+                    }
+                  },
+                  child: Text('Login'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xff0f4f6c),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
+                  )),
             ],
           ),
         ),
       ),
-    );                            
-
+    );
   }
- 
 }

@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
-//auth methods
+//auth methods ////
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -46,6 +46,7 @@ class AuthService {
           'firstName': firstName,
           'lastName': lastName,
           'phoneNumber': phoneNumber,
+          'password': password,
           'yearsOfExperience': yearsOfExperience,
         });
 
@@ -91,6 +92,36 @@ class AuthService {
       }
     } catch (e) {
       return e.toString(); // Return the error message if signup fails
+    }
+  }
+
+  Future<bool> checkIfUserExists(String email) async {
+    try {
+      // Check if the user exists in the 'users' collection based on email
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('users')
+          .where('email', isEqualTo: email)
+          .get();
+
+      return querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print('Error checking user existence: $e');
+      return false;
+    }
+  }
+
+  Future<bool> checkIfCoachExists(String email) async {
+    try {
+      // Check if the user exists in the 'coaches' collection based on email
+      QuerySnapshot querySnapshot = await _firestore
+          .collection('coaches')
+          .where('email', isEqualTo: email)
+          .get();
+
+      return querySnapshot.docs.isNotEmpty;
+    } catch (e) {
+      print('Error checking coach existence: $e');
+      return false;
     }
   }
 

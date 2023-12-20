@@ -1,7 +1,6 @@
+import 'package:career_coach/Pages/Reservation.dart';
+import 'package:career_coach/Pages/profileUser.dart';
 import 'package:flutter/material.dart';
-import 'package:career_coach/Pages/profile_page.dart';
-
-import 'Reservation.dart';
 import 'intro_page.dart';
 
 class DetailsPage extends StatelessWidget {
@@ -17,11 +16,11 @@ class DetailsPage extends StatelessWidget {
           // Create a container for each title with onTap to navigate
           buildTitleContainer(context, 'Account', () {
             Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => ProfilePage()));
+                MaterialPageRoute(builder: (context) => ProfilePageUser()));
           }),
           buildTitleContainer(context, 'My Reservations', () {
             Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ReservationListPage()));
+                MaterialPageRoute(builder: (context) => ReservationsPage()));
           }),
           buildTitleContainer(context, 'Sign Out', () {
             Navigator.pushReplacement(context,
