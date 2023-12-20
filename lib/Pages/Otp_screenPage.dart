@@ -5,8 +5,10 @@ import 'package:flutter/material.dart';
 
 class OTPScreen extends StatefulWidget {
   final String sessionId;
+  final String coachName;
 
-  const OTPScreen({Key? key, required this.sessionId}) : super(key: key);
+  const OTPScreen({Key? key, required this.sessionId, required this.coachName})
+      : super(key: key);
 
   @override
   _OTPScreenState createState() => _OTPScreenState();
@@ -20,6 +22,7 @@ class _OTPScreenState extends State<OTPScreen> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Color(0xff0f4f6c),
+        foregroundColor: Colors.white,
         title: Text('Enter OTP'),
       ),
       body: Padding(
@@ -46,7 +49,7 @@ class _OTPScreenState extends State<OTPScreen> {
                   String userId = FirebaseAuth.instance.currentUser!
                       .uid; // Replace with the actual user ID
 
-                  _saveReservation(userId, widget.sessionId);
+                  _saveReservation(userId, widget.sessionId, widget.coachName);
 
                   // Change status to "unavailable" in sessions table
                   await updateSessionStatus(widget.sessionId);
@@ -63,7 +66,7 @@ class _OTPScreenState extends State<OTPScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (ctx) => ReservationListPage()),
+                                  builder: (ctx) => ReservationsPage()),
                             ); // Close the dialog
                             // Optionally navigate away or perform other actions
                           },
@@ -85,12 +88,10 @@ class _OTPScreenState extends State<OTPScreen> {
     );
   }
 
-  void _saveReservation(String userId, String sessionId) async {
-    FirebaseFirestore.instance.collection('reservations').add({
-      'userId': userId,
-      'sessionId': sessionId,
-      'timestamp': FieldValue.serverTimestamp(),
-    });
+  void _saveReservation(
+      String userId, String sessionId, String coachName) async {
+    FirebaseFirestore.instance.collection('reservations').add(
+        {'userId': userId, 'sessionId': sessionId, 'coachName': coachName});
   }
 
   Future<void> updateSessionStatus(String sessionId) async {

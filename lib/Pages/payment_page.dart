@@ -1,11 +1,16 @@
+import 'package:career_coach/Pages/Otp_screenPage.dart';
+import 'package:career_coach/models/Session.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class PaymentPage extends StatefulWidget {
   final String sessionId;
+  final String coachName;
 
-  const PaymentPage({Key? key, required this.sessionId}) : super(key: key);
+  const PaymentPage(
+      {Key? key, required this.sessionId, required this.coachName})
+      : super(key: key);
   @override
   _PaymentPageState createState() => _PaymentPageState();
 }
@@ -126,8 +131,9 @@ class _PaymentPageState extends State<PaymentPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) =>
-                              OTPScreen(sessionId: widget.sessionId)),
+                          builder: (context) => OTPScreen(
+                              sessionId: widget.sessionId,
+                              coachName: widget.coachName)),
                     );
                   }
                 },
