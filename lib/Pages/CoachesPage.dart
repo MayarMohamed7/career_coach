@@ -61,8 +61,6 @@ class _CoachesPageState extends State<CoachesPage> {
                             MaterialPageRoute(
                               builder: (context) => coachsessionsPage(
                                 coachId: coachId,
-                                coachName:
-                                    coach['firstName'] ?? 'No Coach Name',
                               ),
                             ),
                           );

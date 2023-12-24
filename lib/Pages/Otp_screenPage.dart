@@ -103,7 +103,7 @@ class _OTPScreenState extends State<OTPScreen> {
         .collection('sessions')
         .doc(sessionId)
         .update({
-      'status': 'unavailable',
+      'status': 'Not Available',
     });
   }
 }

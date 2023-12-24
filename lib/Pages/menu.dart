@@ -1,3 +1,4 @@
+import 'package:career_coach/Pages/CoachesPage.dart';
 import 'package:career_coach/Pages/Reservation.dart';
 import 'package:career_coach/Pages/profileUser.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,10 @@ class DetailsPage extends StatelessWidget {
           buildTitleContainer(context, 'My Reservations', () {
             Navigator.push(context,
                 MaterialPageRoute(builder: (context) => ReservationsPage()));
+          }),
+          buildTitleContainer(context, 'Coaches', () {
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => CoachesPage()));
           }),
           buildTitleContainer(context, 'Sign Out', () {
             Navigator.pushReplacement(context,

@@ -1,3 +1,4 @@
+import 'package:career_coach/Pages/choice.dart';
 import 'package:career_coach/Pages/login_page.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class MyButton extends StatelessWidget {
         // Navigate to the login page when the button is pressed
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => loginPage()),
+          MaterialPageRoute(builder: (context) => choicePage()),
         );
       },
       child: Container(
