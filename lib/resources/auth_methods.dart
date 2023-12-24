@@ -94,7 +94,8 @@ class AuthService {
       return e.toString(); // Return the error message if signup fails
     }
   }
-
+// check if user exists
+// bycheck lw el user mawgod abl kda wla la
   Future<bool> checkIfUserExists(String email) async {
     try {
       // Check if the user exists in the 'users' collection based on email
@@ -102,17 +103,28 @@ class AuthService {
           .collection('users')
           .where('email', isEqualTo: email)
           .get();
+          
 
       return querySnapshot.docs.isNotEmpty;
     } catch (e) {
+      // Return false if there is an error
       print('Error checking user existence: $e');
       return false;
+
     }
   }
-
+// check if coach exists
+// bycheck lw el coach mawgod abl kda wla la
   Future<bool> checkIfCoachExists(String email) async {
     try {
-      // Check if the user exists in the 'coaches' collection based on email
+     /*QuerySnapshot is a class in th
+     e Firebase Firestore library for Dart/Flutter.
+      It represents the results of a query. 
+     When you perform a query against a Firestore database,
+      the result is a QuerySnapshot object.
+In the provided code, QuerySnapshot is used to hold the result
+ of a query that checks if a coach with 
+    a specific email exists in the 'coaches' collection of the Firestore database. */
       QuerySnapshot querySnapshot = await _firestore
           .collection('coaches')
           .where('email', isEqualTo: email)

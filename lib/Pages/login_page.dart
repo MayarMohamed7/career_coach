@@ -132,7 +132,7 @@ class _loginPageState extends State<loginPage> {
                       // Sign-in failed, show an error message or handle the error
                       print("Sign-in failed: $signInResult");
 
-                      // Show an error message using ScaffoldMessenger's snackbar
+                      // Show an error message using ScaffoldMessenger's snackbar with duration of 3 seconds
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(
                           content: Text("Sign-in failed: $signInResult"),
