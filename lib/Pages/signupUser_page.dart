@@ -1,8 +1,13 @@
+import 'dart:typed_data';
+
 import 'package:flutter/material.dart';
 import 'package:career_coach/Pages/login_page.dart';
 import 'package:career_coach/resources/auth_methods.dart';
 import 'package:career_coach/Pages/profileUser.dart';
 import 'package:compass_icon/compass_icon.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:career_coach/utils/utils.dart';
+import 'package:career_coach/resources/storage_methods.dart';
 // Other necessary imports
 
 class SignupPageUser extends StatefulWidget {
@@ -19,6 +24,8 @@ class _SignupPageUserState extends State<SignupPageUser> {
   final TextEditingController _lastnameController = TextEditingController();
 
   final TextEditingController _phoneController = TextEditingController();
+   Uint8List?  _image ;
+    final StorageMethods _storageMethods = StorageMethods(); 
 
   //bool _isLoading = false;
 
@@ -30,7 +37,16 @@ class _SignupPageUserState extends State<SignupPageUser> {
     _firstnameController.dispose();
     _lastnameController.dispose();
     _phoneController.dispose();
+    
   }
+void selectImage(ImageSource source) async {
+  Uint8List? image = await _storageMethods.pickImage(source);
+  if (image != null) {
+    setState(() {
+      _image = image;
+    });
+  }
+}
 
   @override
   Widget build(BuildContext context) {
@@ -77,6 +93,56 @@ class _SignupPageUserState extends State<SignupPageUser> {
                   
                   ],
                 ),
+                SizedBox(height: 10),
+                //circular widget to add selected image : 
+         
+                Stack(
+          children: [
+            _image != null
+                ? CircleAvatar(
+                    radius: 64,
+                    backgroundImage: MemoryImage(_image!),
+                  )
+                : CircleAvatar(
+                    radius: 64,
+                    backgroundImage: NetworkImage(
+                        'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'),
+                  ),
+            Positioned(
+              bottom: -10,
+              left: 70,
+              child: PopupMenuButton<String>(
+                onSelected: (value) {
+                  if (value == 'camera') {
+                 selectImage(ImageSource.camera);
+                    // Use ImageSource.camera directly
+                  } else if (value == 'gallery') {
+                    selectImage(ImageSource.gallery);
+                    
+                     // Use ImageSource.gallery directly
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    value: 'camera',
+                    child: ListTile(
+                      leading: Icon(Icons.camera_alt),
+                      title: Text('Camera'),
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'gallery',
+                    child: ListTile(
+                      leading: Icon(Icons.photo_library),
+                      title: Text('Gallery'),
+                    ),
+                  ),
+                ],
+                icon: Icon(Icons.add_a_photo),
+              ),
+            ),
+          ],
+        ),
                 SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.text,
@@ -156,6 +222,11 @@ class _SignupPageUserState extends State<SignupPageUser> {
                       firstName: _firstnameController.text,
                       lastName: _lastnameController.text,
                       phoneNumber: _phoneController.text,
+                      profilePicture: _image!, 
+             
+
+
+
                     );
 
                     // Check the signup result and perform actions accordingly

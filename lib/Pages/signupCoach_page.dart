@@ -1,9 +1,13 @@
+
+import 'dart:typed_data';
+
+import 'package:career_coach/resources/storage_methods.dart';
 import 'package:flutter/material.dart';
 import 'package:career_coach/Pages/login_page.dart';
 import 'package:career_coach/resources/auth_methods.dart';
-import'package:career_coach/firebase_options.dart';
 import 'package:career_coach/Pages/profileCoach.dart'; 
 import 'package:compass_icon/compass_icon.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupPageCoach extends StatefulWidget {
 const SignupPageCoach({Key? key}) : super(key: key);
@@ -16,6 +20,8 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
   final TextEditingController _lastnameController =TextEditingController();
   final TextEditingController _yearsofExpController =TextEditingController();
   final TextEditingController _phoneController =TextEditingController();
+   Uint8List?  _image ;
+    final StorageMethods _storageMethods = StorageMethods(); 
 
    //bool _isLoading = false;
     
@@ -32,6 +38,14 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
     
   
   }
+  void selectImage(ImageSource source) async {
+  Uint8List? image = await _storageMethods.pickImage(source);
+  if (image != null) {
+    setState(() {
+      _image = image;
+    });
+  }
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -77,6 +91,55 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
                   
                   ],
                 ),
+                SizedBox(height: 10),
+                //circular widget to add selected image : 
+         
+                Stack(
+          children: [
+            _image != null
+                ? CircleAvatar(
+                    radius: 64,
+                    backgroundImage: MemoryImage(_image!),
+                  )
+                : CircleAvatar(
+                    radius: 64,
+                    backgroundImage: NetworkImage(
+                        'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'),
+                  ),
+            Positioned(
+              bottom: -10,
+              left: 70,
+              child: PopupMenuButton<String>(
+                onSelected: (value) {
+                  if (value == 'camera') {
+                 selectImage(ImageSource.camera);
+                    // Use ImageSource.camera directly
+                  } else if (value == 'gallery') {
+                    selectImage(ImageSource.gallery);
+                     // Use ImageSource.gallery directly
+                  }
+                },
+                itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
+                  PopupMenuItem<String>(
+                    value: 'camera',
+                    child: ListTile(
+                      leading: Icon(Icons.camera_alt),
+                      title: Text('Camera'),
+                    ),
+                  ),
+                  PopupMenuItem<String>(
+                    value: 'gallery',
+                    child: ListTile(
+                      leading: Icon(Icons.photo_library),
+                      title: Text('Gallery'),
+                    ),
+                  ),
+                ],
+                icon: Icon(Icons.add_a_photo),
+              ),
+            ),
+          ],
+        ),
                 SizedBox(height: 10),
                 TextFormField(
                       keyboardType: TextInputType.text,
@@ -166,6 +229,7 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
       lastName: _lastnameController.text,
       phoneNumber: _phoneController.text,
       yearsOfExperience: _yearsofExpController.text,
+      profilePicture: _image!,
    
 
     );
