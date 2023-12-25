@@ -1,3 +1,7 @@
+import 'dart:html';
+import 'dart:typed_data';
+
+import 'package:career_coach/resources/storage_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -27,6 +31,7 @@ class AuthService {
     required String lastName,
     required String phoneNumber,
     required String yearsOfExperience,
+     required Uint8List profilePicture,
   }) async {
     try {
       // Create user with email and password
@@ -35,7 +40,7 @@ class AuthService {
         email: email,
         password: password,
       );
-
+ StorageMethods().uploadImagetoStorage('coachprofileimg', profilePicture ); 
       // Get the user's UID
       String? uid = userCredential.user?.uid;
 
@@ -48,6 +53,7 @@ class AuthService {
           'phoneNumber': phoneNumber,
           'password': password,
           'yearsOfExperience': yearsOfExperience,
+             'profilePicture': profilePicture,
         });
 
         return null; // Return null if signup is successful
@@ -65,6 +71,7 @@ class AuthService {
     required String firstName,
     required String lastName,
     required String phoneNumber,
+   required Uint8List profilePicture,
   }) async {
     try {
       // Create user with email and password
@@ -73,7 +80,7 @@ class AuthService {
         email: email,
         password: password,
       );
-
+ StorageMethods().uploadImagetoStorage('userprofileimg', profilePicture ); 
       // Get the user's UID
       String? uid = userCredential.user?.uid;
 
@@ -84,6 +91,8 @@ class AuthService {
           'firstName': firstName,
           'lastName': lastName,
           'phoneNumber': phoneNumber,
+          'password': password,
+          'profilePicture': profilePicture,
         });
 
         return null; // Return null if signup is successful
