@@ -5,6 +5,7 @@ import 'package:career_coach/Pages/signupCoach_page.dart';
 import 'package:career_coach/resources/auth_methods.dart';
 import 'package:career_coach/utils/utils.dart';
 import 'package:career_coach/Pages/newSession.dart';
+import 'package:compass_icon/compass_icon.dart';
 
 import 'home.dart';
 
@@ -34,10 +35,20 @@ class _loginPageState extends State<loginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
-      appBar: AppBar(
-        backgroundColor: Color(0xff0f4f6c),
-        title: Text('Career Compass'),
-      ),
+     appBar: AppBar(
+          backgroundColor: Color(0xff0f4f6c),
+          title: Row(
+            children: [
+              CompassIcon(
+                Icon(Icons.compass_calibration_rounded, size: 24),
+                compassDirection: CompassDirection.north,
+                initialDirection: CompassDirection.southWest,
+              ),
+              SizedBox(height: 8),
+              Text('Career Compass', style: TextStyle(fontSize: 20)),
+            ],
+          ),
+        ),
       body: Container(
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.all(16),
@@ -46,14 +57,26 @@ class _loginPageState extends State<loginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Text(
-                'Career Compass',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30.0,
+             children: <Widget>[
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                       CompassIcon(
+                    Icon(Icons.compass_calibration_rounded, size: 24),
+                    compassDirection: CompassDirection.north,
+                    initialDirection: CompassDirection.southWest,
+                                  ),
+                                  SizedBox(height: 8),
+                    Text(
+                      'Career Compass',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30.0,
+                      ),
+                    ),
+                  
+                  ],
                 ),
-              ),
               SizedBox(height: 10),
               TextField(
                 controller: _emailController,
