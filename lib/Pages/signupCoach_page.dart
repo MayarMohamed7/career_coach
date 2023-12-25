@@ -3,7 +3,7 @@ import 'package:career_coach/Pages/login_page.dart';
 import 'package:career_coach/resources/auth_methods.dart';
 import'package:career_coach/firebase_options.dart';
 import 'package:career_coach/Pages/profileCoach.dart'; 
-
+import 'package:compass_icon/compass_icon.dart';
 
 class SignupPageCoach extends StatefulWidget {
 const SignupPageCoach({Key? key}) : super(key: key);
@@ -35,10 +35,20 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff0f4f6c),
-        title: Text('Career Compass'),
-      ),
+     appBar: AppBar(
+          backgroundColor: Color(0xff0f4f6c),
+          title: Row(
+            children: [
+              CompassIcon(
+                Icon(Icons.compass_calibration_rounded, size: 24),
+                compassDirection: CompassDirection.north,
+                initialDirection: CompassDirection.southWest,
+              ),
+              SizedBox(height: 8),
+              Text('Career Compass', style: TextStyle(fontSize: 20)),
+            ],
+          ),
+        ),
       body: Container(
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.all(16),
@@ -48,12 +58,24 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Text(
-                  'Career Compass',
-                  style: TextStyle(
-                    fontWeight: FontWeight.bold,
-                    fontSize: 30.0,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                       CompassIcon(
+                    Icon(Icons.compass_calibration_rounded, size: 24),
+                    compassDirection: CompassDirection.north,
+                    initialDirection: CompassDirection.southWest,
+                                  ),
+                                  SizedBox(height: 8),
+                    Text(
+                      'Career Compass',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 30.0,
+                      ),
+                    ),
+                  
+                  ],
                 ),
                 SizedBox(height: 10),
                 TextFormField(
