@@ -1,5 +1,6 @@
+import 'package:compass_icon/compass_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart'; 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'menu.dart'; // Importing the font_awesome_flutter package
@@ -16,10 +17,20 @@ class _ProfilePageCoachState extends State<ProfilePageCoach> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Color(0xff0f4f6c),
-        title: Text('Profile'),
-      ),
+     appBar: AppBar(
+          backgroundColor: Color(0xff0f4f6c),
+          title: Row(
+            children: [
+              CompassIcon(
+                Icon(Icons.compass_calibration_rounded, size: 24),
+                compassDirection: CompassDirection.north,
+                initialDirection: CompassDirection.southWest,
+              ),
+              SizedBox(height: 8),
+              Text('Career Compass', style: TextStyle(fontSize: 20)),
+            ],
+          ),
+        ),
       endDrawer: Drawer(
         child: DetailsPage(),
       ),
@@ -54,11 +65,11 @@ class _ProfilePageCoachState extends State<ProfilePageCoach> {
   Widget buildCoverImage() {
     return Container(
       color: Colors.grey,
-      child: Image.network(
-        'https://www.forbes.com/advisor/wp-content/uploads/2023/02/Fastest_Growing_Jobs.jpeg.jpg',
-        height: coverHeight,
-        fit: BoxFit.cover,
-      ),
+      child: Image.asset('assets/images/careercompass.png',
+           height: coverHeight,
+        fit: BoxFit.cover,) ,
+   
+      
     );
   }
 
@@ -67,7 +78,7 @@ class _ProfilePageCoachState extends State<ProfilePageCoach> {
       radius: profileHeight / 2,
       backgroundColor: Colors.grey.shade800,
       backgroundImage: NetworkImage(
-          'https://www.pngall.com/wp-content/uploads/12/Avatar-Profile-Vector-PNG-File.png'),
+          'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'),
     );
   }
 
@@ -138,3 +149,4 @@ class _ProfilePageCoachState extends State<ProfilePageCoach> {
     );
   }
 }
+
