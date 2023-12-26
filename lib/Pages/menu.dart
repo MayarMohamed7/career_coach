@@ -2,6 +2,7 @@ import 'package:career_coach/Pages/CoachesPage.dart';
 import 'package:career_coach/Pages/Reservation.dart';
 import 'package:career_coach/Pages/profileUser.dart';
 import 'package:flutter/material.dart';
+
 import 'intro_page.dart';
 
 class DetailsPage extends StatelessWidget {
@@ -31,6 +32,10 @@ class DetailsPage extends StatelessWidget {
             Navigator.pushReplacement(context,
                 MaterialPageRoute(builder: (context) => WelcomePage()));
           }),
+          //  buildTitleContainer(context, 'Chat', () {
+          //   Navigator.pushReplacement(context,
+          //       MaterialPageRoute(builder: (context) => ChatService()));
+          // }),
         ],
       ),
     );
