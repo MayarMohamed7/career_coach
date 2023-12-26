@@ -1,6 +1,5 @@
-import 'package:flutter/material.dart';
 import 'package:career_coach/components/buttons.dart';
-import 'package:career_coach/pages/login_page.dart';
+import 'package:flutter/material.dart';
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
