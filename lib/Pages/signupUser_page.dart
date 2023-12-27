@@ -1,5 +1,4 @@
 import 'dart:typed_data';
-
 import 'package:flutter/material.dart';
 import 'package:career_coach/Pages/login_page.dart';
 import 'package:career_coach/resources/auth_methods.dart';
@@ -54,16 +53,15 @@ void selectImage(ImageSource source) async {
       appBar: AppBar(
           backgroundColor: Color(0xff0f4f6c),
           title: Row(
-            children: [
-              CompassIcon(
-                Icon(Icons.compass_calibration_rounded, size: 24),
-                compassDirection: CompassDirection.north,
-                initialDirection: CompassDirection.southWest,
-              ),
-              SizedBox(height: 8),
-              Text('Career Compass', style: TextStyle(fontSize: 20)),
-            ],
-          ),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/NiceJob.png',
+              height: 120,
+            ),
+            SizedBox(width: 8),
+          ],
+        ),
         ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -77,14 +75,9 @@ void selectImage(ImageSource source) async {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                       CompassIcon(
-                    Icon(Icons.compass_calibration_rounded, size: 24),
-                    compassDirection: CompassDirection.north,
-                    initialDirection: CompassDirection.southWest,
-                                  ),
-                                  SizedBox(height: 8),
+                     SizedBox(height: 8),
                     Text(
-                      'Career Compass',
+                      'Please SignUp Here!',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 30.0,

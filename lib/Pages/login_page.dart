@@ -38,16 +38,15 @@ class _loginPageState extends State<loginPage> {
      appBar: AppBar(
           backgroundColor: Color(0xff0f4f6c),
           title: Row(
-            children: [
-              CompassIcon(
-                Icon(Icons.compass_calibration_rounded, size: 24),
-                compassDirection: CompassDirection.north,
-                initialDirection: CompassDirection.southWest,
-              ),
-              SizedBox(height: 8),
-              Text('Career Compass', style: TextStyle(fontSize: 20)),
-            ],
-          ),
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            Image.asset(
+              'assets/images/NiceJob.png',
+              height: 120,
+            ),
+            SizedBox(width: 8),
+          ],
+        ),
         ),
       body: Container(
         padding: const EdgeInsets.all(16),
@@ -61,19 +60,13 @@ class _loginPageState extends State<loginPage> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                       CompassIcon(
-                    Icon(Icons.compass_calibration_rounded, size: 24),
-                    compassDirection: CompassDirection.north,
-                    initialDirection: CompassDirection.southWest,
-                                  ),
-                                  SizedBox(height: 8),
-                    Text(
-                      'Career Compass',
-                      style: TextStyle(
-                        fontWeight: FontWeight.bold,
-                        fontSize: 30.0,
-                      ),
-                    ),
+                       Text(
+                'Please SignIn Here!',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 30.0,
+                ),
+              ),
                   
                   ],
                 ),
@@ -118,6 +111,7 @@ class _loginPageState extends State<loginPage> {
                   ),
                 ],
               ),
+              SizedBox(height: 20),
               ElevatedButton(
                   onPressed: () async {
                     String? signInResult =
