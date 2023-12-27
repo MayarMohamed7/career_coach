@@ -68,11 +68,20 @@ dev_dependencies:
 flutter:
   uses-material-design: true
   assets:
-    - assets/images/background.jpg
-    - assets/images/icon.png
-  
-    - assets/images/user.jpg
-    - assets/images/coach.jpg
+   - assets/images/background.jpg
+   - assets/images/mo.jpg
+   - assets/images/icon.png
+   - assets/images/88.png
+   - assets/images/bb.png
+   - assets/images/one.png
+   - assets/images/two.png
+   - assets/images/three.png
+   - assets/images/four.png
+   - assets/images/uu.png
+   - assets/images/gg.png
+   - assets/images/NiceJob.png
+   - assets/images/coach.png
+   - assets/images/user.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

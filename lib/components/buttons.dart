@@ -18,7 +18,7 @@ class MyButton extends StatelessWidget {
         // Navigate to the login page when the button is pressed
         Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) => choicePage()),
+          MaterialPageRoute(builder: (context) => ChoicePage()),
         );
       },
       child: Container(
