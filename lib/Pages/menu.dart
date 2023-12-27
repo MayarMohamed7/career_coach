@@ -17,10 +17,6 @@ class DetailsPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          buildTitleContainer(context, 'Account', () {
-            Navigator.pushReplacement(
-                context, MaterialPageRoute(builder: (context) => ProfilePageUser()));
-          }),
           buildTitleContainer(context, 'My Reservations', () {
             Navigator.push(context, MaterialPageRoute(builder: (context) => ReservationsPage()));
           }),
