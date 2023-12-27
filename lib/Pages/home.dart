@@ -20,13 +20,6 @@ class _HomePageState extends State<HomePage> {
   int _currentPage = 0;
   int _currentIndex = 0;
 
-  final List<Widget> _pages = [
-    HomePage(),
-    ChatScreen(),
-    ProfilePageUser(),
-    ProfilePageUser(), // Placeholder for Account page
-  ];
-
   void onTabTapped(int index) {
     setState(() {
       _currentIndex = index;
@@ -36,13 +29,24 @@ class _HomePageState extends State<HomePage> {
         context,
         MaterialPageRoute(builder: (context) => ProfilePageUser()),
       );
-    }
-    else if (index == 1) {
+    } else if (index == 1) {
       Navigator.push(
         context,
         MaterialPageRoute(builder: (context) => CoachesPage()),
       );
     }
+  }
+
+  void _previousImage() {
+    setState(() {
+      _currentPage = (_currentPage - 1).clamp(0, imageList.length - 1);
+    });
+  }
+
+  void _nextImage() {
+    setState(() {
+      _currentPage = (_currentPage + 1).clamp(0, imageList.length - 1);
+    });
   }
 
   @override
@@ -63,27 +67,28 @@ class _HomePageState extends State<HomePage> {
       ),
       endDrawer: Drawer(
         child: Container(
-          color: const Color.fromARGB(255, 255, 255, 255), // Change color to navy blue
+          color: const Color.fromARGB(255, 255, 255, 255),
           child: DetailsPage(),
         ),
       ),
       body: Container(
         decoration: BoxDecoration(
-          color: Colors.white, // Change the color to your preferred background color
+          color: Colors.white,
           image: DecorationImage(
-            image: AssetImage('assets/images/bb.png'), // Add your background image
+            image: AssetImage('assets/images/bb.png'),
             fit: BoxFit.cover,
           ),
         ),
         child: Column(
           children: [
-            SizedBox(height: 8), // Space between app bar and image cards
+            SizedBox(height: 8),
             Container(
               height: 250,
               child: Stack(
                 children: [
                   PageView.builder(
                     itemCount: imageList.length,
+                    controller: PageController(initialPage: _currentPage),
                     onPageChanged: (index) {
                       setState(() {
                         _currentPage = index;
@@ -110,15 +115,7 @@ class _HomePageState extends State<HomePage> {
                     top: 100,
                     left: 8,
                     child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _currentPage =
-                              (_currentPage - 1) % imageList.length;
-                          if (_currentPage < 0) {
-                            _currentPage = imageList.length - 1;
-                          }
-                        });
-                      },
+                      onPressed: _previousImage,
                       icon: Icon(Icons.arrow_back_ios),
                       color: Colors.white,
                     ),
@@ -127,12 +124,7 @@ class _HomePageState extends State<HomePage> {
                     top: 100,
                     right: 8,
                     child: IconButton(
-                      onPressed: () {
-                        setState(() {
-                          _currentPage =
-                              (_currentPage + 1) % imageList.length;
-                        });
-                      },
+                      onPressed: _nextImage,
                       icon: Icon(Icons.arrow_forward_ios),
                       color: Colors.white,
                     ),
