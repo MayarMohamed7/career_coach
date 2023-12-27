@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: WelcomePage(),
-      //home: ChatPage(receiverUserEmail: 'habiba@gmail.com', receiverUserId: 'mayar20@gmail.com',),
+      //home: ChatPage(receiverUserEmail: 'Sarah507@gmail.com',senderUserEmail: 'mayar20@gmail.com',),
     );
   }
 }

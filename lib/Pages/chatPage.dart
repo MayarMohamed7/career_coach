@@ -1,22 +1,18 @@
 import 'package:career_coach/components/chat_bubble.dart';
-import 'package:career_coach/resources/storage_methods.dart';
 import 'package:career_coach/services/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 class ChatPage extends StatefulWidget {
   final String receiverUserEmail;
-  final String receiverUserId;
-  Uint8List?  _image ;
-    final StorageMethods _storageMethods = StorageMethods(); 
+  final String senderUserEmail; // Corrected variable name
 
   ChatPage({
-    super.key,
+    Key? key,
     required this.receiverUserEmail,
-    required this.receiverUserId,
-  });
+    required this.senderUserEmail, // Updated parameter name
+  }) : super(key: key);
 
   @override
   _ChatPageState createState() => _ChatPageState();
@@ -31,7 +27,7 @@ class _ChatPageState extends State<ChatPage> {
     String message = _messageController.text.trim();
     if (_messageController.text.isNotEmpty) {
       await chatService.sendMessage(
-        widget.receiverUserId,
+        widget.senderUserEmail, // Changed to senderUserEmail
         message,
       );
       _messageController.text = '';
@@ -56,7 +52,7 @@ class _ChatPageState extends State<ChatPage> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(data['senderEmail']),
-              const SizedBox(height:5),
+              const SizedBox(height: 5),
               ChatBubble(message: data['message']),
             ],
           ),
@@ -69,7 +65,7 @@ class _ChatPageState extends State<ChatPage> {
     return StreamBuilder(
       stream: chatService.getMessages(
         _firebaseAuth.currentUser!.uid,
-        widget.receiverUserId,
+        widget.senderUserEmail, // Changed to senderUserEmail
       ),
       builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {

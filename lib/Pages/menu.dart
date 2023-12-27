@@ -1,11 +1,13 @@
 import 'package:career_coach/Pages/CoachesPage.dart';
 import 'package:career_coach/Pages/Reservation.dart';
+import 'package:career_coach/Pages/intro_page.dart';
 import 'package:career_coach/Pages/profileUser.dart';
-import 'package:flutter/material.dart';
-
-import 'intro_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart'; 
 
 class DetailsPage extends StatelessWidget {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,34 +17,26 @@ class DetailsPage extends StatelessWidget {
       ),
       body: ListView(
         children: [
-          // Create a container for each title with onTap to navigate
           buildTitleContainer(context, 'Account', () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => ProfilePageUser()));
+            Navigator.pushReplacement(
+                context, MaterialPageRoute(builder: (context) => ProfilePageUser()));
           }),
           buildTitleContainer(context, 'My Reservations', () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => ReservationsPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => ReservationsPage()));
           }),
           buildTitleContainer(context, 'Coaches', () {
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => CoachesPage()));
+            Navigator.push(context, MaterialPageRoute(builder: (context) => CoachesPage()));
           }),
           buildTitleContainer(context, 'Sign Out', () {
-            Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: (context) => WelcomePage()));
+            _auth.signOut();
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => WelcomePage()));
           }),
-          //  buildTitleContainer(context, 'Chat', () {
-          //   Navigator.pushReplacement(context,
-          //       MaterialPageRoute(builder: (context) => ChatService()));
-          // }),
         ],
       ),
     );
   }
 
-  Widget buildTitleContainer(
-      BuildContext context, String title, VoidCallback onTapFunction) {
+  Widget buildTitleContainer(BuildContext context, String title, VoidCallback onTapFunction) {
     return GestureDetector(
       onTap: onTapFunction,
       child: Container(
