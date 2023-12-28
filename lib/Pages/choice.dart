@@ -79,7 +79,8 @@ class ChoicePage extends StatelessWidget {
                   onTap: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => SignupPageCoach()),
+                      MaterialPageRoute(
+                          builder: (context) => SignupPageCoach()),
                     );
                   },
                   child: Column(

@@ -21,11 +21,9 @@ class SessionsNotifier extends StateNotifier<List<Session>> {
         return Session.fromMap(doc.data() as Map<String, dynamic>, doc.id);
       }).toList();
     } catch (e) {
-      state = []; // Handle error appropriately
+      state = [];
     }
   }
-
-  // Add more methods to update sessions if needed
 }
 
 final sessionProvider =

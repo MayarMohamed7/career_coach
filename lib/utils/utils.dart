@@ -11,7 +11,18 @@ class FirestoreService {
     if (coachDoc.exists) {
       return coachDoc.get('firstName');
     } else {
-      return 'Unknown'; // Handle this case as needed
+      return 'Unknown';
+    }
+  }
+
+  static Future<String> fetchUserName(String userId) async {
+    DocumentSnapshot userDoc =
+        await FirebaseFirestore.instance.collection('users').doc(userId).get();
+
+    if (userDoc.exists) {
+      return userDoc.get('firstName');
+    } else {
+      return 'Unknown';
     }
   }
 }

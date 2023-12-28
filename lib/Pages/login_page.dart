@@ -1,3 +1,4 @@
+import 'package:career_coach/Pages/coachHome.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:career_coach/Pages/signupUser_page.dart';
@@ -35,9 +36,9 @@ class _loginPageState extends State<loginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xffffffff),
-     appBar: AppBar(
-          backgroundColor: Color(0xff0f4f6c),
-          title: Row(
+      appBar: AppBar(
+        backgroundColor: Color(0xff0f4f6c),
+        title: Row(
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             Image.asset(
@@ -47,7 +48,7 @@ class _loginPageState extends State<loginPage> {
             SizedBox(width: 8),
           ],
         ),
-        ),
+      ),
       body: Container(
         padding: const EdgeInsets.all(16),
         margin: const EdgeInsets.all(16),
@@ -56,20 +57,19 @@ class _loginPageState extends State<loginPage> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
-             children: <Widget>[
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                       Text(
-                'Please SignIn Here!',
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30.0,
-                ),
+            children: <Widget>[
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    'Please SignIn Here!',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 30.0,
+                    ),
+                  ),
+                ],
               ),
-                  
-                  ],
-                ),
               SizedBox(height: 10),
               TextField(
                 controller: _emailController,
@@ -139,7 +139,7 @@ class _loginPageState extends State<loginPage> {
                         // Redirect to the new session page if the user exists in the 'coaches' collection
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => NewSession()),
+                          MaterialPageRoute(builder: (context) => CoachHome()),
                         );
                       } else {
                         // Handle scenario where the user is neither in 'users' nor 'coaches'
