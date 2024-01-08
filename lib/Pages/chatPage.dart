@@ -33,7 +33,7 @@ class _ChatPageState extends State<ChatPage> {
       _messageController.text = '';
     }
   }
-
+bool debugProfileBuildsEnabled = false;
   Widget _buildMessageItem(DocumentSnapshot document) {
     Map<String, dynamic> data = document.data() as Map<String, dynamic>;
     var alignment = (data['senderId'] == _firebaseAuth.currentUser!.uid)
