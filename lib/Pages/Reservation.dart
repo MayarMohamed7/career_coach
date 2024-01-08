@@ -19,7 +19,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
     super.initState();
     getUserId();
   }
-  //
+  
 
   Future<void> getUserId() async {
     var user = FirebaseAuth.instance.currentUser;
@@ -31,18 +31,33 @@ class _ReservationsPageState extends State<ReservationsPage> {
   }
 
   Future<void> deleteReserved(
-      String sessionId, Map<String, dynamic> data) async {
+      String reservationId, Map<String, dynamic> data) async {
+    String sessionId = data['sessionId'] as String;
     await FirebaseFirestore.instance
         .collection('reservations')
-        .doc(sessionId)
+        .doc(reservationId)
         .delete();
+
+    await FirebaseFirestore.instance
+        .collection('sessions')
+        .doc(sessionId)
+        .update({'status': 'Available'});
+
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Reservation canceled'),
         action: SnackBarAction(
           label: 'Undo',
-          onPressed: () {
-            FirebaseFirestore.instance.collection('reservations').add(data);
+          onPressed: () async {
+
+            await FirebaseFirestore.instance
+                .collection('reservations')
+                .doc(reservationId)
+                .set(data);
+            await FirebaseFirestore.instance
+                .collection('sessions')
+                .doc(sessionId)
+                .update({'status': 'Not Available'});
           },
         ),
       ),
