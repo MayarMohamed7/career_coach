@@ -21,8 +21,17 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+        brightness: Brightness.light,
+      ),
+      darkTheme: ThemeData(
+        primarySwatch: Colors.indigo,
+        brightness: Brightness.dark,
+      ),
+      themeMode: ThemeMode.system, 
       home: WelcomePage(),
-      //home: ChatPage(receiverUserEmail: 'Sarah507@gmail.com',senderUserEmail: 'mayar20@gmail.com',),
     );
+      //home: ChatPage(receiverUserEmail: 'Sarah507@gmail.com',senderUserEmail: 'mayar20@gmail.com',),
   }
 }
