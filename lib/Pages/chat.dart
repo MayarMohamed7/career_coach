@@ -1,18 +1,21 @@
 import 'package:flutter/material.dart';
 
-class ChatScreen extends StatefulWidget {
+
+class ChatScreen extends StatefulWidget { //stateful widget changes with the user interactions
   @override
   _ChatScreenState createState() => _ChatScreenState();
 }
 
 class _ChatScreenState extends State<ChatScreen> {
-  TextEditingController messageController = TextEditingController();
-  List<Widget> chatMessages = [];
+  
+  TextEditingController messageController = TextEditingController(); //it manages the text input for the chat messages
+  List<Widget> chatMessages = []; //intializes empty list to hold the chat messages
+  //chatscreenstate manages the state of the chat screen
 
   void sendMessage() {
-    String message = messageController.text;
+    String message = messageController.text; //retrieve message entered by user
     if (message.isNotEmpty) {
-      setState(() {
+      setState(() { ///changes the state & update ui
         chatMessages.add(_buildMessage(
           sender: "User",
           message: message,

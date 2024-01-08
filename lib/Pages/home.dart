@@ -1,8 +1,7 @@
-import 'package:flutter/material.dart';
-import 'package:career_coach/Pages/chat.dart';
-import 'package:career_coach/Pages/profileUser.dart';
 import 'package:career_coach/Pages/CoachesPage.dart';
 import 'package:career_coach/Pages/menu.dart';
+import 'package:career_coach/Pages/profileUser.dart';
+import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
   @override
