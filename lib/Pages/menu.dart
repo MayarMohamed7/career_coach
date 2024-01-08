@@ -48,7 +48,7 @@ class _DetailsPageState extends State<DetailsPage> {
         ),
         body: ListView(
           children: [
-            buildTitleContainer(context, 'My Reservations', () {
+            buildTitleContainer(context, 'My Reservations', ( ) {
               Navigator.push(
                   context,
                   MaterialPageRoute(

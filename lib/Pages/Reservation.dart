@@ -2,6 +2,7 @@ import 'package:career_coach/Pages/menu.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class ReservationsPage extends StatefulWidget {
   const ReservationsPage({Key? key});
@@ -28,9 +29,12 @@ class _ReservationsPageState extends State<ReservationsPage> {
     }
   }
 
-  Future<void> deleteReserved(String sessionId, Map<String, dynamic> data) async {
-    await FirebaseFirestore.instance.collection('reservations').doc(sessionId).delete();
-
+  Future<void> deleteReserved(
+      String sessionId, Map<String, dynamic> data) async {
+    await FirebaseFirestore.instance
+        .collection('reservations')
+        .doc(sessionId)
+        .delete();
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
         content: Text('Reservation canceled'),
@@ -42,6 +46,14 @@ class _ReservationsPageState extends State<ReservationsPage> {
         ),
       ),
     );
+  }
+
+  String formatDateTime(DateTime date, int minutes) {
+    final DateFormat dateFormat = DateFormat('dd-MM-yyyy');
+    final TimeOfDay time = TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60);
+    final String formattedDate = dateFormat.format(date);
+    final String formattedTime = time.format(context);
+    return '$formattedDate at $formattedTime';
   }
 
   @override
@@ -74,14 +86,23 @@ class _ReservationsPageState extends State<ReservationsPage> {
               var sessionId = reserved['sessionId'];
 
               return FutureBuilder<DocumentSnapshot>(
-                future: FirebaseFirestore.instance.collection('sessions').doc(sessionId).get(),
+                future: FirebaseFirestore.instance
+                    .collection('sessions')
+                    .doc(sessionId)
+                    .get(),
                 builder: (context, sessionSnapshot) {
-                  if (sessionSnapshot.connectionState == ConnectionState.waiting) {
+                  if (sessionSnapshot.connectionState ==
+                      ConnectionState.waiting) {
                     return CircularProgressIndicator();
                   }
 
                   if (sessionSnapshot.hasData && sessionSnapshot.data!.exists) {
-                    var sessionData = sessionSnapshot.data!.data() as Map<String, dynamic>;
+                    var sessionData =
+                        sessionSnapshot.data!.data() as Map<String, dynamic>;
+                    DateTime date = (sessionData['date'] as Timestamp).toDate();
+                    int minutes = sessionData['time'] as int;
+
+                    String sessionDateTime = formatDateTime(date, minutes);
 
                     return Card(
                       child: ListTile(
@@ -90,8 +111,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text('Price: \$${sessionData['price']}'),
-                            Text('Time: ${sessionData['time']}'),
-                            Text('Date: ${sessionData['date']}'),
+                            Text(sessionDateTime),
                           ],
                         ),
                         trailing: IconButton(
