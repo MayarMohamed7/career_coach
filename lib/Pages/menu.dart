@@ -44,7 +44,7 @@ class _DetailsPageState extends State<DetailsPage> {
               },
               icon: Icon(_iconBool ? _iconDark : _iconLight),
             )
-          ],
+          ], //
         ),
         body: ListView(
           children: [

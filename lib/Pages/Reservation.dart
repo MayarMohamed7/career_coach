@@ -19,6 +19,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
     super.initState();
     getUserId();
   }
+  //
 
   Future<void> getUserId() async {
     var user = FirebaseAuth.instance.currentUser;
