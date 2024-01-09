@@ -14,15 +14,18 @@ class SignupPageCoach extends StatefulWidget {
 }
 
 class _SignupPageCoachState extends State<SignupPageCoach> {
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _passwordController = TextEditingController();
-  final TextEditingController _firstnameController = TextEditingController();
-  final TextEditingController _lastnameController = TextEditingController();
-  final TextEditingController _yearsofExpController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  Uint8List? _image;
-  final StorageMethods _storageMethods = StorageMethods();
+  final TextEditingController _emailController =TextEditingController();
+  final TextEditingController _passwordController=  TextEditingController() ; 
+   final TextEditingController _firstnameController =TextEditingController();
+  final TextEditingController _lastnameController =TextEditingController();
+  final TextEditingController _yearsofExpController =TextEditingController();
+  final TextEditingController _phoneController =TextEditingController();
+   Uint8List?  _image ;
+    final StorageMethods _storageMethods = StorageMethods(); 
 
+   //bool _isLoading = false;
+    
+  
   @override
   void dispose() {
     super.dispose();
@@ -183,38 +186,40 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () async {
-                    String? signUpResult =
-                        await AuthService().signUpCoachWithEmailAndPassword(
-                      email: _emailController.text,
-                      password: _passwordController.text,
-                      firstName: _firstnameController.text,
-                      lastName: _lastnameController.text,
-                      phoneNumber: _phoneController.text,
-                      yearsOfExperience: _yearsofExpController.text,
-                      profilePicture: _image!,
-                    );
+                   onPressed: () async {
+    String? signUpResult = await AuthService().signUpCoachWithEmailAndPassword(
+      email: _emailController.text,
+      password: _passwordController.text,
+      firstName: _firstnameController.text,
+      lastName: _lastnameController.text,
+      phoneNumber: _phoneController.text,
+      yearsOfExperience: _yearsofExpController.text,
+      profilePicture: _image!,
+   
 
-                    if (signUpResult == null) {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ProfilePageCoach(),
-                        ),
-                      );
-                    } else {
-                      print("Signup failed: $signUpResult");
-                    }
-                  },
+    );
+
+    // Check the signup result and perform actions accordingly
+    if (signUpResult == null) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => ProfilePageCoach()),
+      );
+    } else {
+      // Signup failed, show an error message or handle the error
+      print("Signup failed: $signUpResult");
+    }
+  },
                   child: Text('Sign Up'),
                   style: ElevatedButton.styleFrom(
-                    primary: Color(0xff0f4f6c),
-                    onPrimary: Colors.white,
+                    backgroundColor: Color(0xff0f4f6c),
+                    foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0),
                     ),
                   ),
                 ),
+                SizedBox(height: 10),
               ],
             ),
           ),

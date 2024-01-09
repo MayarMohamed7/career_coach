@@ -1,4 +1,5 @@
 import 'dart:typed_data';
+import 'package:career_coach/Pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:career_coach/Pages/login_page.dart';
 import 'package:career_coach/resources/auth_methods.dart';
@@ -7,6 +8,7 @@ import 'package:compass_icon/compass_icon.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:career_coach/utils/utils.dart';
 import 'package:career_coach/resources/storage_methods.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 // Other necessary imports
 
 class SignupPageUser extends StatefulWidget {
@@ -25,6 +27,7 @@ class _SignupPageUserState extends State<SignupPageUser> {
   final TextEditingController _phoneController = TextEditingController();
    Uint8List?  _image ;
     final StorageMethods _storageMethods = StorageMethods(); 
+    bool _isLoading = false;
 
   //bool _isLoading = false;
 
@@ -36,6 +39,7 @@ class _SignupPageUserState extends State<SignupPageUser> {
     _firstnameController.dispose();
     _lastnameController.dispose();
     _phoneController.dispose();
+
     
   }
 void selectImage(ImageSource source) async {
@@ -207,7 +211,10 @@ void selectImage(ImageSource source) async {
                 ),
                 SizedBox(height: 20),
                 ElevatedButton(
-                  onPressed: () async {
+                      onPressed: () async {
+                    setState(() {
+                      _isLoading = true;
+                    }); 
                     String? signUpResult =
                         await AuthService().signUpUserWithEmailAndPassword(
                       email: _emailController.text,
@@ -215,26 +222,39 @@ void selectImage(ImageSource source) async {
                       firstName: _firstnameController.text,
                       lastName: _lastnameController.text,
                       phoneNumber: _phoneController.text,
-                      profilePicture: _image!, 
+                      profilePicture: _image, 
              
 
 
 
                     );
-
+                    
+   setState(() {
+                      _isLoading = false;
+                    });
                     // Check the signup result and perform actions accordingly
                     if (signUpResult == null) {
+                    
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => ProfilePageUser()),
+                            builder: (context) => HomePage()),
                       );
                     } else {
                       // Signup failed, show an error message or handle the error
                       print("Signup failed: $signUpResult");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(signUpResult),
+                          backgroundColor: Colors.red,
+                          duration: Duration(seconds: 5), 
+                        ),
+                      );
                     }
                   },
-                  child: Text('Sign Up'),
+                 child: _isLoading
+                      ? CircularProgressIndicator() // Show progress indicator when loading
+                      : Text('Sign Up'), // Show "Sign Up" text otherwise
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Color(0xff0f4f6c),
                     foregroundColor: Colors.white,
@@ -243,6 +263,7 @@ void selectImage(ImageSource source) async {
                     ),
                   ),
                 ),
+                SizedBox(height: 10),
               ],
             ),
           ),
