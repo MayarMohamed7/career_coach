@@ -234,7 +234,7 @@ void selectImage(ImageSource source) async {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const HomePage()),
+                            builder: (context) =>  HomePage()),
                       );
                     } else {
                       // Signup failed, show an error message or handle the error

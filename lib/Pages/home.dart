@@ -1,9 +1,14 @@
 import 'package:career_coach/Pages/CoachesPage.dart';
+import 'package:career_coach/Pages/chat.dart';
+import 'package:career_coach/Pages/chat.dart';
+import 'package:career_coach/Pages/firebase_messaging.dart';
 import 'package:career_coach/Pages/menu.dart';
 import 'package:career_coach/Pages/profileUser.dart';
 import 'package:flutter/material.dart';
+ 
+class HomePage extends StatefulWidget { 
+  const HomePage({super.key});
 
-class HomePage extends StatefulWidget {
   @override
   _HomePageState createState() => _HomePageState();
 }
@@ -26,13 +31,22 @@ class _HomePageState extends State<HomePage> {
     if (index == 3) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ProfilePageUser()),
+        MaterialPageRoute(builder: (context) => const ProfilePageUser()),
       );
-    } else if (index == 1) {
+    } 
+    else if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => CoachesPage()),
+        MaterialPageRoute(builder: (context) =>  ChatScreen()),
       );
+      
+    }
+    else if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const NotificationsPage()),
+      );
+      
     }
   }
 
@@ -52,7 +66,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xFF0F4F6C),
+        backgroundColor: const Color(0xFF0F4F6C),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -60,18 +74,18 @@ class _HomePageState extends State<HomePage> {
               'assets/images/NiceJob.png',
               height: 120,
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
           ],
         ),
       ),
       endDrawer: Drawer(
         child: Container(
           color: const Color.fromARGB(255, 255, 255, 255),
-          child: DetailsPage(),
+          child: const DetailsPage(),
         ),
       ),
       body: Container(
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
           image: DecorationImage(
             image: AssetImage('assets/images/bb.png'),
@@ -80,8 +94,8 @@ class _HomePageState extends State<HomePage> {
         ),
         child: Column(
           children: [
-            SizedBox(height: 8),
-            Container(
+            const SizedBox(height: 8),
+            SizedBox(
               height: 250,
               child: Stack(
                 children: [
@@ -95,7 +109,7 @@ class _HomePageState extends State<HomePage> {
                     },
                     itemBuilder: (context, index) {
                       return Card(
-                        margin: EdgeInsets.symmetric(horizontal: 8.0),
+                        margin: const EdgeInsets.symmetric(horizontal: 8.0),
                         elevation: 4.0,
                         shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(16.0),
@@ -115,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                     left: 8,
                     child: IconButton(
                       onPressed: _previousImage,
-                      icon: Icon(Icons.arrow_back_ios),
+                      icon: const Icon(Icons.arrow_back_ios),
                       color: Colors.white,
                     ),
                   ),
@@ -124,7 +138,7 @@ class _HomePageState extends State<HomePage> {
                     right: 8,
                     child: IconButton(
                       onPressed: _nextImage,
-                      icon: Icon(Icons.arrow_forward_ios),
+                      icon: const Icon(Icons.arrow_forward_ios),
                       color: Colors.white,
                     ),
                   ),
@@ -138,7 +152,7 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text(
+                    const Text(
                       "Welcome to Career Compass",
                       style: TextStyle(
                         fontSize: 20,
@@ -147,8 +161,8 @@ class _HomePageState extends State<HomePage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       "We will help you find your best career path.",
                       style: TextStyle(
                         fontSize: 16,
@@ -156,21 +170,21 @@ class _HomePageState extends State<HomePage> {
                       ),
                       textAlign: TextAlign.center,
                     ),
-                    SizedBox(height: 30),
+                    const SizedBox(height: 30),
                     ElevatedButton(
                       onPressed: () {
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                            builder: (context) => CoachesPage(),
+                            builder: (context) => const CoachesPage(),
                           ),
                         );
                       },
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: Color(0xff0f4f6c),
+                        backgroundColor: const Color(0xff0f4f6c),
                         foregroundColor: Colors.white,
                       ),
-                      child: Text("Show Available Coaches"),
+                      child: const Text("Show Available Coaches"),
                     ),
                   ],
                 ),
@@ -180,7 +194,7 @@ class _HomePageState extends State<HomePage> {
         ),
       ),
       bottomNavigationBar: BottomNavigationBar(
-        backgroundColor: Color(0xff0f4f6c),
+        backgroundColor: const Color(0xff0f4f6c),
         selectedItemColor: Colors.white,
         unselectedItemColor: Colors.white,
         type: BottomNavigationBarType.fixed,
@@ -188,7 +202,7 @@ class _HomePageState extends State<HomePage> {
         showUnselectedLabels: false,
         currentIndex: _currentIndex,
         onTap: onTabTapped,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'Home',

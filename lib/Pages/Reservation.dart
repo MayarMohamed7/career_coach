@@ -19,7 +19,6 @@ class _ReservationsPageState extends State<ReservationsPage> {
     super.initState();
     getUserId();
   }
-  
 
   Future<void> getUserId() async {
     var user = FirebaseAuth.instance.currentUser;
@@ -49,7 +48,6 @@ class _ReservationsPageState extends State<ReservationsPage> {
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () async {
-
             await FirebaseFirestore.instance
                 .collection('reservations')
                 .doc(reservationId)
@@ -66,10 +64,23 @@ class _ReservationsPageState extends State<ReservationsPage> {
 
   String formatDateTime(DateTime date, int minutes) {
     final DateFormat dateFormat = DateFormat('dd-MM-yyyy');
-    final TimeOfDay time = TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60);
+    final TimeOfDay time =
+        TimeOfDay(hour: minutes ~/ 60, minute: minutes % 60);
     final String formattedDate = dateFormat.format(date);
     final String formattedTime = time.format(context);
     return '$formattedDate at $formattedTime';
+  }
+
+  Future<void> sendNotificationToUser(String sessionId) async {
+    var user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('notifications').add({
+        'userId': user.uid,
+        'title': 'Reservation Cancelation',
+        'body': 'You Canceled your coaching session. Open your reservations for details.',
+        'sessionId': sessionId,
+      });
+    } 
   }
 
   @override
@@ -112,27 +123,35 @@ class _ReservationsPageState extends State<ReservationsPage> {
                     return const CircularProgressIndicator();
                   }
 
-                  if (sessionSnapshot.hasData && sessionSnapshot.data!.exists) {
+                  if (sessionSnapshot.hasData &&
+                      sessionSnapshot.data!.exists) {
                     var sessionData =
                         sessionSnapshot.data!.data() as Map<String, dynamic>;
-                    DateTime date = (sessionData['date'] as Timestamp).toDate();
+                    DateTime date =
+                        (sessionData['date'] as Timestamp).toDate();
                     int minutes = sessionData['time'] as int;
 
-                    String sessionDateTime = formatDateTime(date, minutes);
+                    String sessionDateTime =
+                        formatDateTime(date, minutes);
 
                     return Card(
                       child: ListTile(
-                        title: Text('Coach Name: ${reserved['coachName']}'),
+                        title: Text(
+                            'Coach Name: ${reserved['coachName']}'),
                         subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                          crossAxisAlignment:
+                              CrossAxisAlignment.start,
                           children: [
                             Text('Price: \$${sessionData['price']}'),
                             Text(sessionDateTime),
                           ],
                         ),
                         trailing: IconButton(
-                          onPressed: () {
-                            deleteReserved(reservations[index].id, reserved);
+                          onPressed: () async {
+                            await sendNotificationToUser(
+                                sessionId); // Send notification
+                            deleteReserved(
+                                reservations[index].id, reserved);
                           },
                           icon: const Icon(Icons.cancel),
                           color: Colors.red,
@@ -142,11 +161,14 @@ class _ReservationsPageState extends State<ReservationsPage> {
                   } else {
                     return Card(
                       child: ListTile(
-                        title: Text('Coach Name: ${reserved['coachName']}'),
-                        subtitle: const Text('Session details not found'),
+                        title: Text(
+                            'Coach Name: ${reserved['coachName']}'),
+                        subtitle:
+                            const Text('Session details not found'),
                         trailing: IconButton(
                           onPressed: () {
-                            deleteReserved(reservations[index].id, reserved);
+                            deleteReserved(
+                                reservations[index].id, reserved);
                           },
                           icon: const Icon(Icons.cancel),
                           color: Colors.red,
