@@ -3,16 +3,12 @@ import 'package:career_coach/Pages/home.dart';
 import 'package:flutter/material.dart';
 import 'package:career_coach/Pages/login_page.dart';
 import 'package:career_coach/resources/auth_methods.dart';
-import 'package:career_coach/Pages/profileUser.dart';
-import 'package:compass_icon/compass_icon.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:career_coach/utils/utils.dart';
 import 'package:career_coach/resources/storage_methods.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 // Other necessary imports
 
 class SignupPageUser extends StatefulWidget {
-  const SignupPageUser({Key? key}) : super(key: key);
+  const SignupPageUser({super.key});
 
   @override
   _SignupPageUserState createState() => _SignupPageUserState();
@@ -55,7 +51,7 @@ void selectImage(ImageSource source) async {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color(0xff0f4f6c),
+          backgroundColor: const Color(0xff0f4f6c),
           title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -63,7 +59,7 @@ void selectImage(ImageSource source) async {
               'assets/images/NiceJob.png',
               height: 120,
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
           ],
         ),
         ),
@@ -76,7 +72,7 @@ void selectImage(ImageSource source) async {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                      SizedBox(height: 8),
@@ -90,7 +86,7 @@ void selectImage(ImageSource source) async {
                   
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 //circular widget to add selected image : 
          
                 Stack(
@@ -100,7 +96,7 @@ void selectImage(ImageSource source) async {
                     radius: 64,
                     backgroundImage: MemoryImage(_image!),
                   )
-                : CircleAvatar(
+                : const CircleAvatar(
                     radius: 64,
                     backgroundImage: NetworkImage(
                         'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'),
@@ -120,14 +116,14 @@ void selectImage(ImageSource source) async {
                   }
                 },
                 itemBuilder: (BuildContext context) => <PopupMenuEntry<String>>[
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: 'camera',
                     child: ListTile(
                       leading: Icon(Icons.camera_alt),
                       title: Text('Camera'),
                     ),
                   ),
-                  PopupMenuItem<String>(
+                  const PopupMenuItem<String>(
                     value: 'gallery',
                     child: ListTile(
                       leading: Icon(Icons.photo_library),
@@ -135,70 +131,70 @@ void selectImage(ImageSource source) async {
                     ),
                   ),
                 ],
-                icon: Icon(Icons.add_a_photo),
+                icon: const Icon(Icons.add_a_photo),
               ),
             ),
           ],
         ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _firstnameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your Firstname',
                     labelText: 'Firstname',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _lastnameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your Lastname',
                     labelText: 'Lastname',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _phoneController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your Phone Number',
                     labelText: 'Phone Number',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your email',
                     labelText: 'Email',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   obscureText: true,
                   controller: _passwordController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your password',
                     labelText: 'Password',
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
-                    Text('Already have an account?'),
-                    SizedBox(width: 10),
+                    const Text('Already have an account?'),
+                    const SizedBox(width: 10),
                     GestureDetector(
                       onTap: () {
                         Navigator.push(
                           context,
-                          MaterialPageRoute(builder: (context) => loginPage()),
+                          MaterialPageRoute(builder: (context) => const loginPage()),
                         );
                       },
-                      child: Text(
+                      child: const Text(
                         'Login',
                         style: TextStyle(
                           color: Color(0xff0f4f6c),
@@ -209,7 +205,7 @@ void selectImage(ImageSource source) async {
                     ),
                   ],
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                       onPressed: () async {
                     setState(() {
@@ -238,7 +234,7 @@ void selectImage(ImageSource source) async {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => HomePage()),
+                            builder: (context) => const HomePage()),
                       );
                     } else {
                       // Signup failed, show an error message or handle the error
@@ -247,23 +243,23 @@ void selectImage(ImageSource source) async {
                         SnackBar(
                           content: Text(signUpResult),
                           backgroundColor: Colors.red,
-                          duration: Duration(seconds: 5), 
+                          duration: const Duration(seconds: 5), 
                         ),
                       );
                     }
-                  },
-                 child: _isLoading
-                      ? CircularProgressIndicator() // Show progress indicator when loading
-                      : Text('Sign Up'), // Show "Sign Up" text otherwise
+                  }, // Show "Sign Up" text otherwise
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff0f4f6c),
+                    backgroundColor: const Color(0xff0f4f6c),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0),
                     ),
                   ),
+                 child: _isLoading
+                      ? const CircularProgressIndicator() // Show progress indicator when loading
+                      : const Text('Sign Up'),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
               ],
             ),
           ),

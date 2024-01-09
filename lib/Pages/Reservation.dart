@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class ReservationsPage extends StatefulWidget {
-  const ReservationsPage({Key? key});
+  const ReservationsPage({super.key});
 
   @override
   State<ReservationsPage> createState() => _ReservationsPageState();
@@ -45,7 +45,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
 
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(
-        content: Text('Reservation canceled'),
+        content: const Text('Reservation canceled'),
         action: SnackBarAction(
           label: 'Undo',
           onPressed: () async {
@@ -76,10 +76,10 @@ class _ReservationsPageState extends State<ReservationsPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0f4f6c),
-        title: Text('Reservations'),
+        backgroundColor: const Color(0xff0f4f6c),
+        title: const Text('Reservations'),
       ),
-      endDrawer: Drawer(
+      endDrawer: const Drawer(
         child: DetailsPage(),
       ),
       body: StreamBuilder<QuerySnapshot>(
@@ -89,10 +89,10 @@ class _ReservationsPageState extends State<ReservationsPage> {
             .snapshots(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+            return const Center(child: CircularProgressIndicator());
           }
           if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
-            return Center(child: Text('No reservations found.'));
+            return const Center(child: Text('No reservations found.'));
           }
           var reservations = snapshot.data!.docs;
           return ListView.builder(
@@ -109,7 +109,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
                 builder: (context, sessionSnapshot) {
                   if (sessionSnapshot.connectionState ==
                       ConnectionState.waiting) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   }
 
                   if (sessionSnapshot.hasData && sessionSnapshot.data!.exists) {
@@ -134,7 +134,7 @@ class _ReservationsPageState extends State<ReservationsPage> {
                           onPressed: () {
                             deleteReserved(reservations[index].id, reserved);
                           },
-                          icon: Icon(Icons.cancel),
+                          icon: const Icon(Icons.cancel),
                           color: Colors.red,
                         ),
                       ),
@@ -143,12 +143,12 @@ class _ReservationsPageState extends State<ReservationsPage> {
                     return Card(
                       child: ListTile(
                         title: Text('Coach Name: ${reserved['coachName']}'),
-                        subtitle: Text('Session details not found'),
+                        subtitle: const Text('Session details not found'),
                         trailing: IconButton(
                           onPressed: () {
                             deleteReserved(reservations[index].id, reserved);
                           },
-                          icon: Icon(Icons.cancel),
+                          icon: const Icon(Icons.cancel),
                           color: Colors.red,
                         ),
                       ),

@@ -7,8 +7,7 @@ class OTPScreen extends StatefulWidget {
   final String sessionId;
   final String coachName;
 
-  const OTPScreen({Key? key, required this.sessionId, required this.coachName})
-      : super(key: key);
+  const OTPScreen({super.key, required this.sessionId, required this.coachName});
 
   @override
   _OTPScreenState createState() => _OTPScreenState();
@@ -21,9 +20,9 @@ class _OTPScreenState extends State<OTPScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0f4f6c),
+        backgroundColor: const Color(0xff0f4f6c),
         foregroundColor: Colors.white,
-        title: Text('Enter OTP'),
+        title: const Text('Enter OTP'),
       ),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -32,7 +31,7 @@ class _OTPScreenState extends State<OTPScreen> {
             TextFormField(
               controller: otpController,
               keyboardType: TextInputType.number,
-              decoration: InputDecoration(labelText: 'OTP'),
+              decoration: const InputDecoration(labelText: 'OTP'),
               validator: (value) {
                 if (value == null || value.isEmpty || value.length != 6) {
                   return 'Please enter a valid 6-digit OTP';
@@ -40,7 +39,7 @@ class _OTPScreenState extends State<OTPScreen> {
                 return null;
               },
             ),
-            SizedBox(height: 16),
+            const SizedBox(height: 16),
             ElevatedButton(
               onPressed: () async {
                 // Verify OTP logic
@@ -57,16 +56,16 @@ class _OTPScreenState extends State<OTPScreen> {
                   showDialog(
                     context: context,
                     builder: (ctx) => AlertDialog(
-                      title: Text('Verification'),
-                      content: Text('Verified and reservation done.'),
+                      title: const Text('Verification'),
+                      content: const Text('Verified and reservation done.'),
                       actions: <Widget>[
                         TextButton(
-                          child: Text('Okay'),
+                          child: const Text('Okay'),
                           onPressed: () {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                  builder: (ctx) => ReservationsPage()),
+                                  builder: (ctx) => const ReservationsPage()),
                             ); // Close the dialog
                             // Optionally navigate away or perform other actions
                           },
@@ -77,10 +76,10 @@ class _OTPScreenState extends State<OTPScreen> {
                 }
               },
               style: ElevatedButton.styleFrom(
-                backgroundColor: Color(0xff0f4f6c),
+                backgroundColor: const Color(0xff0f4f6c),
                 foregroundColor: Colors.white,
               ),
-              child: Text('Verify OTP'),
+              child: const Text('Verify OTP'),
             ),
           ],
         ),

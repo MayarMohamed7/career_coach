@@ -67,7 +67,7 @@ class _reserveeDetailsState extends State<reserveeDetails> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Expanded(
               child: Container(
                 padding: const EdgeInsets.all(16.0),
@@ -78,15 +78,15 @@ class _reserveeDetailsState extends State<reserveeDetails> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
+                    const Text(
                       'Details',
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Divider(),
-                    SizedBox(height: 10),
+                    const Divider(),
+                    const SizedBox(height: 10),
                     Row(
                       children: [
                         Expanded(
@@ -102,7 +102,7 @@ class _reserveeDetailsState extends State<reserveeDetails> {
                               ),
                               Text(
                                 reserveeName!,
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -118,7 +118,7 @@ class _reserveeDetailsState extends State<reserveeDetails> {
                                 formatDate(DateTime.fromMillisecondsSinceEpoch(
                                     reservationDetails!['timestamp']
                                         .millisecondsSinceEpoch)),
-                                style: TextStyle(
+                                style: const TextStyle(
                                   fontSize: 16,
                                   fontWeight: FontWeight.w500,
                                 ),
@@ -132,7 +132,7 @@ class _reserveeDetailsState extends State<reserveeDetails> {
                         ),
                       ],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     // Add other reservation details here
                   ],
                 ),

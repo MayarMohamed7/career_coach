@@ -24,19 +24,19 @@ class _passwordResetState extends State<passwordResetpage>
  
     try{
       await FirebaseAuth.instance.sendPasswordResetEmail(email: emailController.text.trim());
-      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('password Reset Email Sent'),
+      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(content: Text('password Reset Email Sent'),
       duration: Duration(seconds: 5),
       backgroundColor: Colors.green,));
     Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => loginPage()), // Replace with your Login Page
+        MaterialPageRoute(builder: (context) => const loginPage()), // Replace with your Login Page
       );
       return true;
     } on FirebaseAuthException catch(e)
     {
   
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.toString()),
-      duration: Duration(seconds: 5),
+      duration: const Duration(seconds: 5),
       backgroundColor: Colors.red,));
     
       return false;
@@ -49,7 +49,7 @@ class _passwordResetState extends State<passwordResetpage>
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color(0xff0f4f6c),
+          backgroundColor: const Color(0xff0f4f6c),
           title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -57,7 +57,7 @@ class _passwordResetState extends State<passwordResetpage>
               'assets/images/NiceJob.png',
               height: 120,
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
           ],
         ),
         ),
@@ -67,12 +67,12 @@ class _passwordResetState extends State<passwordResetpage>
           child: Column(
          mainAxisAlignment: MainAxisAlignment.center,
          children: [
-          Text(
+          const Text(
             'Recieve a password reset link',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 24),
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           TextFormField(
             controller: emailController,
                 textInputAction: TextInputAction.done,
@@ -80,7 +80,7 @@ class _passwordResetState extends State<passwordResetpage>
                 keyboardType: TextInputType.emailAddress,
 
 
-            decoration: InputDecoration(
+            decoration: const InputDecoration(
               hintText: 'Email',
               border: OutlineInputBorder(),
           
@@ -89,15 +89,14 @@ class _passwordResetState extends State<passwordResetpage>
             
             
           ),
-          SizedBox(height: 16),
+          const SizedBox(height: 16),
           ElevatedButton.icon(
             style: ElevatedButton.styleFrom(
-              primary: Color.fromARGB(255, 5, 41, 71),
-              onPrimary: Colors.white,
-              minimumSize: Size.fromHeight(50),
+              foregroundColor: Colors.white, backgroundColor: const Color.fromARGB(255, 5, 41, 71),
+              minimumSize: const Size.fromHeight(50),
             )
 
-          , icon: Icon(Icons.email), label: Text('Send Email' , style: TextStyle(fontSize: 24),),
+          , icon: const Icon(Icons.email), label: const Text('Send Email' , style: TextStyle(fontSize: 24),),
            onPressed: () {
             resetpassword();
            },

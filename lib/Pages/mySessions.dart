@@ -117,17 +117,17 @@ class _mySessionsState extends ConsumerState<mySessions> {
                                       );
                                     }
                                   },
-                                  child: const Text('View Details'),
                                   style: ElevatedButton.styleFrom(
                                     backgroundColor: const Color(0xff0f4f6c),
                                     foregroundColor: Colors.white,
                                   ),
+                                  child: const Text('View Details'),
                                 )
                               : null,
                         ),
                       );
                     })
-                : Center(child: Text('No sessions available')),
+                : const Center(child: Text('No sessions available')),
           )
         ]));
   }

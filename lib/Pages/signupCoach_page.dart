@@ -7,7 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 class SignupPageCoach extends StatefulWidget {
-  const SignupPageCoach({Key? key}) : super(key: key);
+  const SignupPageCoach({super.key});
 
   @override
   _SignupPageCoachState createState() => _SignupPageCoachState();
@@ -50,7 +50,7 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Color(0xff0f4f6c),
+        backgroundColor: const Color(0xff0f4f6c),
         title: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -58,7 +58,7 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
               'assets/images/NiceJob.png',
               height: 120,
             ),
-            SizedBox(width: 8),
+            const SizedBox(width: 8),
           ],
         ),
       ),
@@ -71,7 +71,7 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                Row(
+                const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: 8),
@@ -84,7 +84,7 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Stack(
                   children: [
                     _image != null
@@ -92,7 +92,7 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
                             radius: 64,
                             backgroundImage: MemoryImage(_image!),
                           )
-                        : CircleAvatar(
+                        : const CircleAvatar(
                             radius: 64,
                             backgroundImage: NetworkImage(
                                 'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'),
@@ -110,14 +110,14 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
                         },
                         itemBuilder: (BuildContext context) =>
                             <PopupMenuEntry<String>>[
-                          PopupMenuItem<String>(
+                          const PopupMenuItem<String>(
                             value: 'camera',
                             child: ListTile(
                               leading: Icon(Icons.camera_alt),
                               title: Text('Camera'),
                             ),
                           ),
-                          PopupMenuItem<String>(
+                          const PopupMenuItem<String>(
                             value: 'gallery',
                             child: ListTile(
                               leading: Icon(Icons.photo_library),
@@ -125,66 +125,66 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
                             ),
                           ),
                         ],
-                        icon: Icon(Icons.add_a_photo),
+                        icon: const Icon(Icons.add_a_photo),
                       ),
                     ),
                   ],
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _firstnameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your Firstname',
                     labelText: 'Firstname',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.text,
                   controller: _lastnameController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your Lastname',
                     labelText: 'Lastname',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _yearsofExpController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your Years of Experience',
                     labelText: 'Years of Experience',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.number,
                   controller: _phoneController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your Phone Number',
                     labelText: 'Phone Number',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   keyboardType: TextInputType.emailAddress,
                   controller: _emailController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your email',
                     labelText: 'Email',
                   ),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 TextFormField(
                   obscureText: true,
                   controller: _passwordController,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     hintText: 'Enter your password',
                     labelText: 'Password',
                   ),
                 ),
-                SizedBox(height: 20),
+                const SizedBox(height: 20),
                 ElevatedButton(
                    onPressed: () async {
     String? signUpResult = await AuthService().signUpCoachWithEmailAndPassword(
@@ -203,23 +203,23 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
     if (signUpResult == null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => ProfilePageCoach()),
+        MaterialPageRoute(builder: (context) => const ProfilePageCoach()),
       );
     } else {
       // Signup failed, show an error message or handle the error
       print("Signup failed: $signUpResult");
     }
   },
-                  child: Text('Sign Up'),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: Color(0xff0f4f6c),
+                    backgroundColor: const Color(0xff0f4f6c),
                     foregroundColor: Colors.white,
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0),
                     ),
                   ),
+                  child: const Text('Sign Up'),
                 ),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
               ],
             ),
           ),

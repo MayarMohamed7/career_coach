@@ -1,11 +1,12 @@
 import 'package:compass_icon/compass_icon.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart'; 
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 import 'menu.dart'; // Importing the font_awesome_flutter package
 
 class ProfilePageUser extends StatefulWidget {
+  const ProfilePageUser({super.key});
+
   @override
   _ProfilePageUserState createState() => _ProfilePageUserState();
 }
@@ -18,8 +19,8 @@ class _ProfilePageUserState extends State<ProfilePageUser> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-          backgroundColor: Color(0xff0f4f6c),
-          title: Row(
+          backgroundColor: const Color(0xff0f4f6c),
+          title: const Row(
             children: [
               CompassIcon(
                 Icon(Icons.compass_calibration_rounded, size: 24),
@@ -31,7 +32,7 @@ class _ProfilePageUserState extends State<ProfilePageUser> {
             ],
           ),
         ),
-      endDrawer: Drawer(
+      endDrawer: const Drawer(
         child: DetailsPage(),
       ),
       body: ListView(
@@ -77,7 +78,7 @@ class _ProfilePageUserState extends State<ProfilePageUser> {
     return CircleAvatar(
       radius: profileHeight / 2,
       backgroundColor: Colors.grey.shade800,
-      backgroundImage: NetworkImage(
+      backgroundImage: const NetworkImage(
           'https://cdn-icons-png.flaticon.com/512/3177/3177440.png'),
     );
   }
@@ -86,11 +87,11 @@ class _ProfilePageUserState extends State<ProfilePageUser> {
     return Column(
       children: [
         const SizedBox(height: 8),
-        Text(
+        const Text(
           'John Doe',
           style: TextStyle(fontWeight: FontWeight.bold, fontSize: 28),
         ),
-        Text(
+        const Text(
           'Flutter Software Developer',
           style: TextStyle(fontSize: 20, color: Colors.black),
         ),
@@ -109,15 +110,15 @@ class _ProfilePageUserState extends State<ProfilePageUser> {
           ],
         ),
         Container(
-          padding: EdgeInsets.symmetric(horizontal: 48),
-          child: Column(
+          padding: const EdgeInsets.symmetric(horizontal: 48),
+          child: const Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'about',
                 style: TextStyle(fontSize: 28, fontWeight: FontWeight.w600),
               ),
-              const SizedBox(height: 16),
+              SizedBox(height: 16),
               Text(
                 'flutter Software Developer with 2 years of experience in mobile application development. Skilled in AndroidFlutter, Firebase, Java, Kotlin, and Dart. Strong engineering professional with a Bachelor of Technology BTech focused in Computer Science from Lovely Professional University.',
                 style: TextStyle(fontSize: 20, fontWeight: FontWeight.w400),
@@ -133,7 +134,7 @@ class _ProfilePageUserState extends State<ProfilePageUser> {
     return CircleAvatar(
       radius: 25,
       child: Material(
-        shape: CircleBorder(),
+        shape: const CircleBorder(),
         clipBehavior: Clip.hardEdge,
         color: Colors.transparent,
         child: InkWell(

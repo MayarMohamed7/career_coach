@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:career_coach/models/Session.dart';
 
 final formatter = DateFormat('dd-MM-yyyy');
 
@@ -64,7 +63,7 @@ class _NewSessionState extends State<NewSession> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Enter Session Details'),
-        backgroundColor: Color(0xff0f4f6c),
+        backgroundColor: const Color(0xff0f4f6c),
       ),
       body: SingleChildScrollView(
         // Makes the form scrollable
@@ -76,7 +75,7 @@ class _NewSessionState extends State<NewSession> {
             children: <Widget>[
               TextFormField(
                 controller: _priceController,
-                decoration: InputDecoration(
+                decoration: const InputDecoration(
                   labelText: 'Enter price',
                   prefixText: '\$',
                   border: OutlineInputBorder(), // Adds border
@@ -85,18 +84,18 @@ class _NewSessionState extends State<NewSession> {
                 validator: (value) =>
                     value!.isEmpty ? 'Please enter a price' : null,
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               Row(
                 children: [
                   Expanded(
                     child: Text(
                       'Date: ${formatter.format(_selectedDate)}',
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
                   IconButton(
                     onPressed: _selectDate,
-                    icon: Icon(Icons.calendar_today),
+                    icon: const Icon(Icons.calendar_today),
                   ),
                 ],
               ),
@@ -105,23 +104,23 @@ class _NewSessionState extends State<NewSession> {
                   Expanded(
                     child: Text(
                       'Time: ${selectedTime.format(context)}',
-                      style: TextStyle(fontSize: 16),
+                      style: const TextStyle(fontSize: 16),
                     ),
                   ),
                   IconButton(
                     onPressed: _selectTime,
-                    icon: Icon(Icons.access_time),
+                    icon: const Icon(Icons.access_time),
                   ),
                 ],
               ),
-              SizedBox(height: 20),
+              const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: _saveSession,
-                child: const Text('Save Session'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xff0f4f6c),
                   foregroundColor: Colors.white,
                 ),
+                child: const Text('Save Session'),
               ),
             ],
           ),

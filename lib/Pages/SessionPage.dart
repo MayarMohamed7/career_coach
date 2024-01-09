@@ -4,7 +4,6 @@ import 'package:career_coach/Pages/profileCoach.dart';
 import 'package:career_coach/models/Session.dart';
 import 'package:career_coach/providers/sessions_provider.dart';
 import 'package:career_coach/utils/utils.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
@@ -13,7 +12,7 @@ import 'menu.dart';
 
 class coachsessionsPage extends ConsumerStatefulWidget {
   final String coachId;
-  const coachsessionsPage({Key? key, required this.coachId}) : super(key: key);
+  const coachsessionsPage({super.key, required this.coachId});
   @override
   _CoachSessionsPageState createState() => _CoachSessionsPageState();
 }
@@ -37,7 +36,7 @@ class _CoachSessionsPageState extends ConsumerState<coachsessionsPage> {
         backgroundColor: const Color(0xff0f4f6c),
         title: const Text('Coaching Sessions'),
       ),
-      endDrawer: Drawer(
+      endDrawer: const Drawer(
         child: DetailsPage(),
       ),
       body: Column(
@@ -52,13 +51,13 @@ class _CoachSessionsPageState extends ConsumerState<coachsessionsPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => ChatScreen()),
+                      MaterialPageRoute(builder: (context) => const ChatScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff0f4f6c),
+                      backgroundColor: const Color(0xff0f4f6c),
                       foregroundColor: Colors.white),
-                  child: Text('Start Chat'),
+                  child: const Text('Start Chat'),
                 ),
               ),
               Padding(
@@ -69,13 +68,13 @@ class _CoachSessionsPageState extends ConsumerState<coachsessionsPage> {
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => ProfilePageCoach()),
+                          builder: (context) => const ProfilePageCoach()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: Color(0xff0f4f6c),
+                      backgroundColor: const Color(0xff0f4f6c),
                       foregroundColor: Colors.white),
-                  child: Text('View Profile'),
+                  child: const Text('View Profile'),
                 ),
               ),
             ],
@@ -169,11 +168,11 @@ class _CoachSessionsPageState extends ConsumerState<coachsessionsPage> {
                                         );
                                       }
                                     : null,
-                                child: const Text('Reserve'),
                                 style: ElevatedButton.styleFrom(
                                   backgroundColor: const Color(0xff0f4f6c),
                                   foregroundColor: Colors.white,
                                 ),
+                                child: const Text('Reserve'),
                               ),
                             ),
                           );
@@ -181,7 +180,7 @@ class _CoachSessionsPageState extends ConsumerState<coachsessionsPage> {
                       );
                     },
                   )
-                : Center(child: Text('No sessions available')),
+                : const Center(child: Text('No sessions available')),
           ),
         ],
       ),

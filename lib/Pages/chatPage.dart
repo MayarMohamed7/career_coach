@@ -1,129 +1,193 @@
-import 'package:career_coach/components/chat_bubble.dart';
-import 'package:career_coach/services/chat_service.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-class ChatPage extends StatefulWidget {
-  final String receiverUserEmail;
-  final String senderUserEmail; // Corrected variable name
-
-  ChatPage({
-    Key? key,
-    required this.receiverUserEmail,
-    required this.senderUserEmail, // Updated parameter name
-  }) : super(key: key);
-
+class ChatScreen extends StatefulWidget {
   @override
-  _ChatPageState createState() => _ChatPageState();
+  _ChatScreenState createState() => _ChatScreenState();
 }
 
-class _ChatPageState extends State<ChatPage> {
-  final TextEditingController _messageController = TextEditingController();
-  final ChatService chatService = ChatService();
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+class _ChatScreenState extends State<ChatScreen> {
+  final _auth = FirebaseAuth.instance;
+  late User loggedInUser;
+  late String loggedInUserId;
 
-  void sendMessage() async {
-    String message = _messageController.text.trim();
-    if (_messageController.text.isNotEmpty) {
-      await chatService.sendMessage(
-        widget.senderUserEmail, // Changed to senderUserEmail
-        message,
-      );
-      _messageController.text = '';
+  final messageTextController = TextEditingController();
+  final _firestore = FirebaseFirestore.instance;
+
+  late Stream<QuerySnapshot> _messagesStream;
+
+  @override
+  void initState() {
+    super.initState();
+
+    getCurrentUser();
+    _messagesStream = _firestore
+        .collection('messages')
+        .orderBy('timestamp', descending: true)
+        .snapshots();
+  }
+
+  void getCurrentUser() async {
+    try {
+      final user = _auth.currentUser;
+      if (user != null) {
+        loggedInUser = user;
+        loggedInUserId = user.uid;
+      }
+    } catch (e) {
+      print(e);
     }
   }
-bool debugProfileBuildsEnabled = false;
-  Widget _buildMessageItem(DocumentSnapshot document) {
-    Map<String, dynamic> data = document.data() as Map<String, dynamic>;
-    var alignment = (data['senderId'] == _firebaseAuth.currentUser!.uid)
-        ? CrossAxisAlignment.end
-        : CrossAxisAlignment.start;
 
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: (data['senderId'] == _firebaseAuth.currentUser!.uid)
-            ? MainAxisAlignment.end
-            : MainAxisAlignment.start,
-        crossAxisAlignment: alignment,
-        children: [
-          Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(data['senderEmail']),
-              const SizedBox(height: 5),
-              ChatBubble(message: data['message']),
-            ],
-          ),
-        ],
-      ),
-    );
+  void sendMessage() async {
+    if (messageTextController.text.isNotEmpty) {
+      Map<String, dynamic> message = {
+        "sender": loggedInUserId,
+        "message": messageTextController.text,
+        "timestamp": DateTime.now()
+      };
+
+      _firestore.collection('messages').add(message);
+      messageTextController.clear();
+    }
   }
 
-  Widget _buildMessageList() {
-    return StreamBuilder(
-      stream: chatService.getMessages(
-        _firebaseAuth.currentUser!.uid,
-        widget.senderUserEmail, // Changed to senderUserEmail
-      ),
-      builder: (BuildContext context, AsyncSnapshot<QuerySnapshot> snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return Center(child: CircularProgressIndicator());
-        } else {
-          if (snapshot.hasError) {
-            return Center(child: Text('Error: ${snapshot.error}'));
-          } else {
-            return ListView(
-              children: snapshot.data!.docs.map((document) {
-                return _buildMessageItem(document);
-              }).toList(),
-            );
-          }
-        }
-      },
-    );
-  }
+  void respond(String messageId) async {
+    if (messageTextController.text.isNotEmpty) {
+      Map<String, dynamic> response = {
+        "sender": loggedInUserId,
+        "message": messageTextController.text,
+        "timestamp": DateTime.now(),
+        "isResponse": true,
+        "originalMessageId": messageId
+      };
 
-  Widget _buildMessageInput() {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: _messageController,
-              decoration: InputDecoration(
-                hintText: 'Type a message',
-              ),
-            ),
-          ),
-          IconButton(
-            onPressed: sendMessage,
-            icon: Icon(Icons.send),
-          ),
-        ],
-      ),
-    );
+      // Add response message to collection
+      _firestore.collection('messages').add(response);
+
+      messageTextController.clear();
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text(widget.receiverUserEmail)),
-      body: Column(
+      backgroundColor: Colors.grey,
+      appBar: AppBar(
+        title: Text('Chat'),
+        backgroundColor: Colors.red,
+      ),
+      body: StreamBuilder(
+          stream: _messagesStream,
+          builder: (context, snapshot) {
+            return ListView.builder(
+                reverse: false,
+                itemCount: snapshot.data?.docs.length,
+                itemBuilder: (context, index) {
+                  DocumentSnapshot doc = snapshot.data!.docs[index];
+
+                  if (doc['sender'] == 'LdbimA6KumgDfbtONWFAL3ZSW433') {
+                    // Admin message
+                    return AdminMessageTile(
+                      message: doc['message'],
+                    );
+                  } else {
+                    // User message
+                    return MessageTile(
+                        message: doc['message'],
+                        isMe: doc['sender'] == loggedInUserId,
+                        onTap: () {
+                          // Admin respond button tapped
+                          respond(doc.id);
+                        });
+                  }
+                });
+          }),
+      bottomSheet: Row(
         children: [
           Expanded(
-            child: Column(
-              children: [
-                Expanded(
-                  child: _buildMessageList(),
+            child: TextField(
+              controller: messageTextController,
+              decoration: InputDecoration(
+                hintText: 'Message...',
+                focusedBorder: OutlineInputBorder(
+                  borderSide: BorderSide(
+                      color: Colors.red), // Set the border color here
                 ),
-                _buildMessageInput(),
-              ],
+              ),
             ),
           ),
+          TextButton(
+            onPressed: sendMessage,
+            child: Text('Send'),
+            style: ButtonStyle(
+              foregroundColor: MaterialStateProperty.all<Color>(Colors.red),
+            ),
+          )
         ],
+      ),
+    );
+  }
+}
+
+// Message tiles
+// Message tile
+class MessageTile extends StatelessWidget {
+  final String message;
+  final bool isMe;
+  final VoidCallback onTap;
+
+  const MessageTile(
+      {required this.message, required this.isMe, required this.onTap});
+
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(
+          top: 8, bottom: 8, left: isMe ? 0 : 24, right: isMe ? 24 : 0),
+      alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        decoration: BoxDecoration(
+          borderRadius: isMe
+              ? BorderRadius.only(
+                  topLeft: Radius.circular(23),
+                  bottomLeft: Radius.circular(23),
+                  topRight: Radius.circular(23))
+              : BorderRadius.only(
+                  topRight: Radius.circular(23),
+                  bottomRight: Radius.circular(23),
+                  topLeft: Radius.circular(23)),
+          color: isMe ? Colors.grey[300] : Colors.grey[300],
+        ),
+        child: Text(message),
+      ),
+    );
+  }
+}
+
+// Admin message tile
+class AdminMessageTile extends StatelessWidget {
+  final String message;
+
+  const AdminMessageTile({required this.message});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: EdgeInsets.only(top: 8, bottom: 8, left: 24, right: 24),
+      alignment: Alignment.centerRight,
+      child: Container(
+        padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(23),
+            bottomLeft: Radius.circular(23),
+            topRight: Radius.circular(23),
+          ),
+          color: Colors.red[300],
+        ),
+        child: Text(message),
       ),
     );
   }
