@@ -16,11 +16,58 @@ class mySessions extends ConsumerStatefulWidget {
 
 class _mySessionsState extends ConsumerState<mySessions> {
   String coachId = FirebaseAuth.instance.currentUser!.uid;
+
   @override
   void initState() {
     super.initState();
     // Trigger fetching sessions when the widget is first built
     ref.read(sessionProvider(coachId).notifier).fetchSessions(coachId);
+  }
+
+  Future<void> deleteSession(String sessionId) async {
+    try {
+      // ngeb l session l awl abl ma nmsh 3shan yba 3ndna l data lw 3ml undo
+      DocumentSnapshot sessionDoc = await FirebaseFirestore.instance
+          .collection('sessions')
+          .doc(sessionId)
+          .get();
+      var sessionData = sessionDoc.data() as Map<String, dynamic>?;
+
+      if (sessionData != null) {
+        await FirebaseFirestore.instance
+            .collection('sessions')
+            .doc(sessionId)
+            .delete();
+        ref.read(sessionProvider(coachId).notifier).fetchSessions(
+            coachId); //3shan bnst3ml provider fa hncall it tany 3shan yfetch l sessions 3shan l ui ytghyr
+
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Session deleted'),
+            action: SnackBarAction(
+              label: 'Undo',
+              onPressed: () async {
+                //3ml undo hrg3 ba l data
+                await FirebaseFirestore.instance
+                    .collection('sessions')
+                    .doc(sessionId)
+                    .set(sessionData);
+                // ncall l provider tany 3shan tzhr tany fl ui
+                ref
+                    .read(sessionProvider(coachId).notifier)
+                    .fetchSessions(coachId);
+              },
+            ),
+          ),
+        );
+      } else {
+        throw Exception('Session data not found');
+      }
+    } catch (e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(content: Text('Error deleting session: $e')),
+      );
+    }
   }
 
   @override
@@ -58,10 +105,8 @@ class _mySessionsState extends ConsumerState<mySessions> {
                           isReserved = false;
                           break;
                         default:
-                          statusColor =
-                              Colors.grey; // Default color for unknown status
-                          statusText =
-                              'Unknown'; // Default text for unknown status
+                          statusColor = Colors.grey;
+                          statusText = 'Unknown';
                           break;
                       }
                       return Card(
@@ -96,7 +141,9 @@ class _mySessionsState extends ConsumerState<mySessions> {
                           trailing: isReserved
                               ? ElevatedButton(
                                   onPressed: () async {
-                                    // Fetch the reservation ID for this session
+                                    //hndwr 3la l session id de lw hya mwgoda f table reservation 3shan n3rf hya reserved wala la
+                                    //3shan lw reserved hn3ml l button bta3 show dets
+                                    //gher kda lw msh reserved l coach ynf3 ydelete l session mdam mhdsh hgzha lsa
                                     var reservationSnapshot =
                                         await FirebaseFirestore.instance
                                             .collection('reservations')
@@ -107,7 +154,6 @@ class _mySessionsState extends ConsumerState<mySessions> {
                                     if (reservationSnapshot.docs.isNotEmpty) {
                                       var reservationId =
                                           reservationSnapshot.docs.first.id;
-                                      // Navigate to ReserveeDetails with the reservation ID
                                       Navigator.push(
                                         context,
                                         MaterialPageRoute(
@@ -123,7 +169,13 @@ class _mySessionsState extends ConsumerState<mySessions> {
                                   ),
                                   child: const Text('View Details'),
                                 )
-                              : null,
+                              : IconButton(
+                                  onPressed: () {
+                                    deleteSession(sessions[index].id);
+                                  },
+                                  icon: Icon(Icons.cancel),
+                                  color: Colors.red,
+                                ),
                         ),
                       );
                     })

@@ -51,7 +51,7 @@ class _CoachSessionsPageState extends ConsumerState<coachsessionsPage> {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const ChatScreen()),
+                      MaterialPageRoute(builder: (context) => ChatScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
