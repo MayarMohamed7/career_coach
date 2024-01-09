@@ -44,6 +44,14 @@ dependencies:
   image_picker: ^0.8.4+4 
   firebase_storage: ^11.5.6
   permission_handler: ^11.1.0 
+  dropdown_button2: ^2.3.9
+  flutter_rating_bar: ^4.0.1
+  shared_preferences: ^2.0.9
+  sqflite: ^2.0.0
+  path_provider: ^2.0.15  
+  path: ^1.8.3
+ 
+ 
 
 dev_dependencies:
   flutter_test:
@@ -59,7 +67,7 @@ dev_dependencies:
   build_runner: ^2.4.7
   custom_lint: ^0.5.7
   riverpod_lint: ^2.3.7
-
+  
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
 
@@ -82,6 +90,7 @@ flutter:
    - assets/images/NiceJob.png
    - assets/images/coach.png
    - assets/images/user.png
+   - assets/images/careercompass.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
