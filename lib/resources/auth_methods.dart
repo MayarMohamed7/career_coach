@@ -1,6 +1,6 @@
 import 'dart:html';
 import 'dart:typed_data';
-
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:career_coach/resources/storage_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -16,6 +16,9 @@ class AuthService {
       {required String email, required String password}) async {
     try {
       await _auth.signInWithEmailAndPassword(email: email, password: password);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('loggedIn', true);
+
       return null; // Return null if login is successful
     } catch (e) {
       return e.toString(); // Return the error message if login fails
@@ -31,7 +34,7 @@ class AuthService {
     required String lastName,
     required String phoneNumber,
     required String yearsOfExperience,
-     required Uint8List profilePicture,
+   Uint8List? profilePicture,
   }) async {
     try {
       // Create user with email and password
@@ -40,7 +43,8 @@ class AuthService {
         email: email,
         password: password,
       );
- StorageMethods().uploadImagetoStorage('coachprofileimg', profilePicture ); 
+      if(profilePicture != null)  { StorageMethods().uploadImagetoStorage('coachprofileimg', profilePicture ); }
+
       // Get the user's UID
       String? uid = userCredential.user?.uid;
 
@@ -55,6 +59,8 @@ class AuthService {
           'yearsOfExperience': yearsOfExperience,
              'profilePicture': profilePicture,
         });
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('loggedIn', true);    
 
         return null; // Return null if signup is successful
       } else {
@@ -71,7 +77,7 @@ class AuthService {
     required String firstName,
     required String lastName,
     required String phoneNumber,
-   required Uint8List profilePicture,
+    Uint8List?   profilePicture,
   }) async {
     try {
       // Create user with email and password
@@ -79,8 +85,8 @@ class AuthService {
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
-      );
- StorageMethods().uploadImagetoStorage('userprofileimg', profilePicture ); 
+      ); if(profilePicture != null) 
+       { StorageMethods().uploadImagetoStorage('userprofileimg', profilePicture ); }
       // Get the user's UID
       String? uid = userCredential.user?.uid;
 
@@ -94,6 +100,8 @@ class AuthService {
           'password': password,
           'profilePicture': profilePicture,
         });
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setBool('loggedIn', true);    
 
         return null; // Return null if signup is successful
       } else {
@@ -146,8 +154,18 @@ In the provided code, QuerySnapshot is used to hold the result
     }
   }
 
-  // Sign out
+ // Sign out
   Future<void> signOut() async {
-    await _auth.signOut();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool('loggedIn', false);
+
+  }
+
+
+  Future<bool> checkAuthenticationStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool loggedIn = prefs.getBool('loggedIn') ?? false;
+    return loggedIn;
   }
 }
+
