@@ -32,7 +32,7 @@ class _HomePageState extends State<CoachHome> {
     if (index == 3) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>  ProfilePageUser()),
+        MaterialPageRoute(builder: (context) =>  ProfilePagecoach()),
       );
     } 
     else if (index == 1) {

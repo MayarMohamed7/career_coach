@@ -34,7 +34,7 @@ int _currentIndex = 0;
     if (index == 3) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>  ProfilePageUser()),
+        MaterialPageRoute(builder: (context) =>  ProfilePagecoach()),
       );
     } 
     else if (index == 1) {

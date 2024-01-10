@@ -12,13 +12,13 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 import 'DetailsCoach.dart';
-class ProfilePageUser extends StatefulWidget {
+class ProfilePagecoach extends StatefulWidget {
 
-   const ProfilePageUser({super.key}) ; 
+   const ProfilePagecoach({super.key}) ; 
   @override
   _ProfilePageUserState createState() => _ProfilePageUserState();
 }
-class _ProfilePageUserState extends State<ProfilePageUser> {
+class _ProfilePageUserState extends State<ProfilePagecoach> {
     final StorageMethods _storageMethods = StorageMethods();
      TextEditingController _aboutController = TextEditingController();
     TextEditingController _linkController = TextEditingController();
