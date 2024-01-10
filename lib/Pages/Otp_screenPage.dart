@@ -1,13 +1,14 @@
-import 'package:career_coach/Pages/Reservation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:career_coach/Pages/Reservation.dart'; // Ensure correct import
 
 class OTPScreen extends StatefulWidget {
   final String sessionId;
   final String coachName;
 
-  const OTPScreen({super.key, required this.sessionId, required this.coachName});
+  const OTPScreen({Key? key, required this.sessionId, required this.coachName})
+      : super(key: key);
 
   @override
   _OTPScreenState createState() => _OTPScreenState();
@@ -44,9 +45,7 @@ class _OTPScreenState extends State<OTPScreen> {
               onPressed: () async {
                 // Verify OTP logic
                 if (otpController.text.length == 6) {
-                  // Save reservation details to Firebase
-                  String userId = FirebaseAuth.instance.currentUser!
-                      .uid; // Replace with the actual user ID
+                  String userId = FirebaseAuth.instance.currentUser!.uid;
 
                   _saveReservation(userId, widget.sessionId, widget.coachName);
 
@@ -66,8 +65,7 @@ class _OTPScreenState extends State<OTPScreen> {
                               context,
                               MaterialPageRoute(
                                   builder: (ctx) => const ReservationsPage()),
-                            ); // Close the dialog
-                            // Optionally navigate away or perform other actions
+                            );
                           },
                         ),
                       ],
@@ -95,6 +93,20 @@ class _OTPScreenState extends State<OTPScreen> {
       'timestamp': FieldValue.serverTimestamp(),
       'coachName': coachName
     });
+
+    await sendReservationConfirmationNotification(sessionId);
+  }
+
+  Future<void> sendReservationConfirmationNotification(String sessionId) async {
+    var user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      await FirebaseFirestore.instance.collection('notifications').add({
+        'userId': user.uid,
+        'title': 'Reservation Confirmation',
+        'body': 'Your reservation has been confirmed. Enjoy your coaching session!',
+        'sessionId': sessionId,
+      });
+    }
   }
 
   Future<void> updateSessionStatus(String sessionId) async {
