@@ -25,7 +25,7 @@ class AuthService {
 
   // Sign up with email and password
 
-  Future<String?> signUpCoachWithEmailAndPassword({
+   Future<String?> signUpCoachWithEmailAndPassword({
     required String email,
     required String password,
     required String firstName,
@@ -41,10 +41,14 @@ class AuthService {
         email: email,
         password: password,
       );
-      if(profilePicture != null)  { StorageMethods().uploadImagetoStorage('coachprofileimg', profilePicture ); }
+        String? profileURL ; 
+      if(profilePicture != null)  { 
+        profileURL =await StorageMethods().uploadImagetoStorage('coachprofileimg', profilePicture );
+      }
 
       // Get the user's UID
       String? uid = userCredential.user?.uid;
+     
 
       if (uid != null) {
         // Save user data to Firestore in the 'coaches' collection
@@ -55,7 +59,7 @@ class AuthService {
           'phoneNumber': phoneNumber,
           'password': password,
           'yearsOfExperience': yearsOfExperience,
-             'profilePicture': profilePicture,
+             'profilePicture': profileURL,
         });
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setBool('loggedIn', true);    
@@ -68,7 +72,6 @@ class AuthService {
       return e.toString(); // Return the error message if signup fails
     }
   }
-
   Future<String?> signUpUserWithEmailAndPassword({
     required String email,
     required String password,
@@ -83,20 +86,23 @@ class AuthService {
           await _auth.createUserWithEmailAndPassword(
         email: email,
         password: password,
-      ); if(profilePicture != null) 
-       { StorageMethods().uploadImagetoStorage('userprofileimg', profilePicture ); }
+      ); 
       // Get the user's UID
       String? uid = userCredential.user?.uid;
-
+String? profilepicURl;
       if (uid != null) {
-        // Save user data to Firestore in the 'coaches' collection
+        if(profilePicture != null) 
+       {  profilepicURl = await StorageMethods().uploadImagetoStorage('userprofileimg', profilePicture ); 
+      
+                 }
+
         await _firestore.collection('users').doc(uid).set({
           'email': email,
           'firstName': firstName,
           'lastName': lastName,
           'phoneNumber': phoneNumber,
           'password': password,
-          'profilePicture': profilePicture,
+          'profilePicture': profilepicURl,
         });
         SharedPreferences prefs = await SharedPreferences.getInstance();
         await prefs.setBool('loggedIn', true);    
@@ -128,6 +134,8 @@ class AuthService {
 
     }
   }
+
+
 // check if coach exists
 // bycheck lw el coach mawgod abl kda wla la
   Future<bool> checkIfCoachExists(String email) async {
@@ -156,6 +164,7 @@ In the provided code, QuerySnapshot is used to hold the result
   Future<void> signOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.setBool('loggedIn', false);
+   
 
   }
 

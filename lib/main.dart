@@ -1,5 +1,8 @@
+import 'package:career_coach/Pages/home.dart';
 import 'package:career_coach/Pages/intro_page.dart';
 import 'package:career_coach/firebase_options.dart';
+import 'package:career_coach/resources/auth_methods.dart';
+import 'package:career_coach/Pages/intro_page.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -7,11 +10,13 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+
   runApp(
-     ProviderScope(   
+    ProviderScope(
       child: MyApp(),
     ),
   );
@@ -19,25 +24,42 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   final FirebaseMessaging _firebaseMessaging = FirebaseMessaging.instance;
-
-   MyApp({super.key});
+  final AuthService _authMethods = AuthService();
 
   @override
   Widget build(BuildContext context) {
     _initializeFirebaseMessaging(); // Initialize Firebase Messaging
 
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        brightness: Brightness.light,
-      ),
-      darkTheme: ThemeData(
-        primarySwatch: Colors.indigo,
-        brightness: Brightness.dark,
-      ),
-      themeMode: ThemeMode.system, 
-      home: const WelcomePage(),
+    return FutureBuilder<bool>(
+      future: _authMethods.checkAuthenticationStatus(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            home: Scaffold(
+              body: Center(
+                child: CircularProgressIndicator(),
+              ),
+            ),
+          );
+        } else {
+          final bool isLoggedIn = snapshot.data ?? false;
+
+          return MaterialApp(
+            debugShowCheckedModeBanner: false,
+            theme: ThemeData(
+              primarySwatch: Colors.blue,
+              brightness: Brightness.light,
+            ),
+            darkTheme: ThemeData(
+              primarySwatch: Colors.indigo,
+              brightness: Brightness.dark,
+            ),
+            themeMode: ThemeMode.system,
+            home: isLoggedIn ? HomePage() : const WelcomePage(),
+          );
+        }
+      },
     );
   }
 

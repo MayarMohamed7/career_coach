@@ -251,6 +251,7 @@ void selectImage(ImageSource source) async {
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff0f4f6c),
                     foregroundColor: Colors.white,
+                       fixedSize: Size(200, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0),
                     ),

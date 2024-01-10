@@ -177,35 +177,37 @@ class _loginPageState extends State<loginPage> {
                     // Sign-in failed, show an error message or handle the error
                     print("Sign-in failed: $signInResult");
 
-                    // Show an error message using ScaffoldMessenger's snackbar with duration of 3 seconds
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Sign-in failed: $signInResult"),
-                        duration: Duration(seconds: 5),
-                        backgroundColor: Colors.red,
-                      ),
-                    );
-                  }
-                  setState(() {
-                    _isLoading = false;
-                  });
-                },
-                child: _isLoading
-                    ? CircularProgressIndicator() // Show progress indicator when loading
-                    : Text('Login'), // Show "Sign Up" text otherwise
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Color(0xff0f4f6c),
-                  foregroundColor: Colors.white,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(32.0),
+                      // Show an error message using ScaffoldMessenger's snackbar with duration of 3 seconds
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Sign-in failed: $signInResult"),
+                          duration: Duration(seconds: 5),
+                          backgroundColor: Colors.red,
+                        ),
+                      );
+                    }
+                       setState(() {
+                        _isLoading = false;
+                      });
+                  },
+                  child: _isLoading
+                      ? CircularProgressIndicator() // Show progress indicator when loading
+                      : Text('Login'), // Show "Sign Up" text otherwise
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xff0f4f6c),
+                    fixedSize: Size(200, 50),
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(32.0),
+                    ),
                   ),
                 ),
-              ),
-              SizedBox(height: 10),
-            ],
+                SizedBox(height: 10),
+              ],
+            ),
           ),
         ),
-      ),
-    );
+      );
+    
   }
 }

@@ -10,9 +10,10 @@ import 'package:flutter/material.dart';
 
 class CoachesPage extends StatefulWidget {
   final String? coachName;
+
   const CoachesPage({Key? key, this.coachName});
 
-  @override  
+  @override
   State<CoachesPage> createState() => _CoachesPageState();
 }
 
@@ -21,7 +22,7 @@ class _CoachesPageState extends State<CoachesPage> {
   final CollectionReference _coaches =
       FirebaseFirestore.instance.collection('coaches');
 
-  final StorageMethods storageMethods = StorageMethods();
+  final StorageMethods _storageMethods = StorageMethods();
 
   int _currentIndex = 0;
 
@@ -39,11 +40,10 @@ class _CoachesPageState extends State<CoachesPage> {
         context,
         MaterialPageRoute(builder: (context) => const HomePage()),
       );
-    } 
-    else if (index == 1) {
+    } else if (index == 1) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) =>  ChatScreen()),
+        MaterialPageRoute(builder: (context) => ChatScreen()),
       );
     } else if (index == 2) {
       Navigator.push(
@@ -101,10 +101,11 @@ class _CoachesPageState extends State<CoachesPage> {
                   itemBuilder: (context, index) {
                     var coach = coaches[index].data() as Map<String, dynamic>;
                     var coachId = coaches[index].id;
-                    var coachImagePath = coach['assets/images/coach.png'] ?? '';
+                    var coachImagePath =
+                        coach['assets/images/coach.png'] ?? '';
 
                     return FutureBuilder<String?>(
-                      future: storageMethods.getCoachImageURL(coachImagePath),
+                      future: _storageMethods.getProfileImg(coachId),
                       builder: (context, snapshot) {
                         var coachImageURL = snapshot.data;
 
@@ -124,8 +125,8 @@ class _CoachesPageState extends State<CoachesPage> {
                                   leading: CircleAvatar(
                                     backgroundImage: coachImageURL != null
                                         ? NetworkImage(coachImageURL)
-                                        : const AssetImage('assets/images/coach.png')
-                                            as ImageProvider<Object>,
+                                        : AssetImage(
+                                            'assets/images/coach.png') as ImageProvider<Object>,
                                     radius: 25,
                                   ),
                                   title: Text(
@@ -145,7 +146,8 @@ class _CoachesPageState extends State<CoachesPage> {
                                         Navigator.push(
                                           context,
                                           MaterialPageRoute(
-                                            builder: (context) => coachsessionsPage(
+                                            builder: (context) =>
+                                                coachsessionsPage(
                                               coachId: coachId,
                                             ),
                                           ),
@@ -154,7 +156,8 @@ class _CoachesPageState extends State<CoachesPage> {
                                       style: ElevatedButton.styleFrom(
                                         primary: const Color(0xFF0F4F6C),
                                         shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(20),
+                                          borderRadius:
+                                              BorderRadius.circular(20),
                                         ),
                                       ),
                                       child: const Text(
@@ -162,6 +165,18 @@ class _CoachesPageState extends State<CoachesPage> {
                                         style: TextStyle(color: Colors.white),
                                       ),
                                     ),
+                                  ),
+                                ),
+                                const SizedBox(height: 10),
+                                ElevatedButton(
+                                  onPressed: () {
+                                    _storageMethods.showRatingDialog(
+                                        context, coachId);
+                                  },
+                                  child: const Text('Rate Coach'),
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.orange,
+                                    foregroundColor: Colors.white,
                                   ),
                                 ),
                               ],

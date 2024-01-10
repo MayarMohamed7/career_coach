@@ -210,7 +210,7 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
     if (signUpResult == null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => CoachHome()),
+        MaterialPageRoute(builder: (context) => ProfilePageCoach()),
       );
     } else {
       // Signup failed, show an error message or handle the error

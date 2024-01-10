@@ -4,6 +4,7 @@ import 'package:career_coach/Pages/intro_page.dart';
 import 'package:career_coach/Pages/profileUser.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DetailsPage extends StatefulWidget {
   const DetailsPage({Key? key}) : super(key: key);
@@ -59,10 +60,12 @@ class _DetailsPageState extends State<DetailsPage> {
                   context,
                   MaterialPageRoute(builder: (context) => CoachesPage()));
             }),
-            buildTitleContainer(context, 'Sign Out', () {
+            buildTitleContainer(context, 'Sign Out', () async {
               _auth.signOut();
               Navigator.pushReplacement(context,
                   MaterialPageRoute(builder: (context) => WelcomePage()));
+                    SharedPreferences prefs = await SharedPreferences.getInstance();
+      await prefs.setBool('loggedIn', false);
             }),
           ],
         ),
