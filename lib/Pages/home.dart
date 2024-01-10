@@ -1,6 +1,5 @@
 import 'package:career_coach/Pages/CoachesPage.dart';
-import 'package:career_coach/Pages/chat.dart';
-import 'package:career_coach/Pages/chat.dart';
+import 'package:career_coach/Pages/chatPage.dart';
 import 'package:career_coach/Pages/firebase_messaging.dart';
 import 'package:career_coach/Pages/menu.dart';
 import 'package:career_coach/Pages/profileUser.dart';

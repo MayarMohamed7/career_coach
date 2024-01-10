@@ -1,6 +1,9 @@
-import 'package:career_coach/Pages/chat.dart';
+import 'package:career_coach/Pages/chatPage.dart';
+import 'package:career_coach/Pages/firebase_messaging.dart';
+import 'package:career_coach/Pages/home.dart';
 import 'package:career_coach/Pages/payment_page.dart';
 import 'package:career_coach/Pages/profileCoach.dart';
+import 'package:career_coach/Pages/profileUser.dart';
 import 'package:career_coach/models/Session.dart';
 import 'package:career_coach/providers/sessions_provider.dart';
 import 'package:career_coach/utils/utils.dart';
@@ -26,15 +29,52 @@ class _CoachSessionsPageState extends ConsumerState<coachsessionsPage> {
         .read(sessionProvider(widget.coachId).notifier)
         .fetchSessions(widget.coachId);
   }
+int _currentIndex = 0;
 
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const ProfilePageUser()),
+      );
+    } else if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const HomePage()),
+      );
+    } 
+    else if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  ChatScreen()),
+      );
+    } else if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const NotificationsPage()),
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     List<Session> sessions = ref.watch(sessionProvider(widget.coachId));
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: const Color(0xff0f4f6c),
-        title: const Text('Coaching Sessions'),
+        backgroundColor: const Color(0xFF0F4F6C),
+        title: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'assets/images/NiceJob.png',
+              height: 120,
+            ),
+            const SizedBox(width: 8),
+          ],
+        ),
       ),
       endDrawer: const Drawer(
         child: DetailsPage(),
@@ -44,6 +84,14 @@ class _CoachSessionsPageState extends ConsumerState<coachsessionsPage> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
+            Text(
+            'Available Sessions',
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.bold,
+            ),
+            textAlign: TextAlign.center,
+          ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -208,6 +256,34 @@ class _CoachSessionsPageState extends ConsumerState<coachsessionsPage> {
             ),
           ],
         ),
+      ),
+    bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xFF0F4F6C),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: _currentIndex,
+        onTap: onTabTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message),
+            label: 'Messages',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
+          ),
+        ],
       ),
     );
   }
