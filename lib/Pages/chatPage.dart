@@ -63,9 +63,7 @@ class _ChatScreenState extends State<ChatScreen> {
         "originalMessageId": messageId
       };
 
-      // Add response message to collection
       _firestore.collection('messages').add(response);
-
       messageTextController.clear();
     }
   }
@@ -73,91 +71,100 @@ class _ChatScreenState extends State<ChatScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey,
       appBar: AppBar(
         title: Text('Chat'),
-        backgroundColor: Colors.red,
+        backgroundColor: Color(0xFF0F4F6C), // Luxurious color
       ),
       body: StreamBuilder(
-          stream: _messagesStream,
-          builder: (context, snapshot) {
-            return ListView.builder(
-                reverse: false,
-                itemCount: snapshot.data?.docs.length,
-                itemBuilder: (context, index) {
-                  DocumentSnapshot doc = snapshot.data!.docs[index];
+        stream: _messagesStream,
+        builder: (context, snapshot) {
+          return ListView.builder(
+            reverse: true,
+            itemCount: snapshot.data?.docs.length,
+            itemBuilder: (context, index) {
+              DocumentSnapshot doc = snapshot.data!.docs[index];
 
-                  if (doc['sender'] == 'LdbimA6KumgDfbtONWFAL3ZSW433') {
-                    // Admin message
-                    return AdminMessageTile(
-                      message: doc['message'],
-                    );
-                  } else {
-                    // User message
-                    return MessageTile(
-                        message: doc['message'],
-                        isMe: doc['sender'] == loggedInUserId,
-                        onTap: () {
-                          // Admin respond button tapped
-                          respond(doc.id);
-                        });
-                  }
-                });
-          }),
-      bottomSheet: Row(
-        children: [
-          Expanded(
-            child: TextField(
-              controller: messageTextController,
-              decoration: InputDecoration(
-                hintText: 'Message...',
-                focusedBorder: OutlineInputBorder(
-                  borderSide: BorderSide(
-                      color: Colors.red), // Set the border color here
+              if (doc['sender'] == 'LdbimA6KumgDfbtONWFAL3ZSW433') {
+                // Admin message
+                return AdminMessageTile(message: doc['message']);
+              } else {
+                // User message
+                return MessageTile(
+                  message: doc['message'],
+                  isMe: doc['sender'] == loggedInUserId,
+                  onTap: () {
+                    // Admin respond button tapped
+                    respond(doc.id);
+                  },
+                );
+              }
+            },
+          );
+        },
+      ),
+      bottomSheet: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Container(
+          color: Colors.white, // Background color
+          child: Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  controller: messageTextController,
+                  decoration: InputDecoration(
+                    hintText: 'Message...',
+                    border: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0F4F6C)), // Luxurious color
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                    focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Color(0xFF0F4F6C)), // Luxurious color
+                      borderRadius: BorderRadius.circular(30.0),
+                    ),
+                  ),
                 ),
               ),
-            ),
+              TextButton(
+                onPressed: sendMessage,
+                child: Text(
+                  'Send',
+                  style: TextStyle(color: Color(0xFF0F4F6C)), // Luxurious color
+                ),
+              )
+            ],
           ),
-          TextButton(
-            onPressed: sendMessage,
-            child: Text('Send'),
-            style: ButtonStyle(
-              foregroundColor: MaterialStateProperty.all<Color>(Colors.red),
-            ),
-          )
-        ],
+        ),
       ),
     );
   }
 }
 
-// Message tiles
-// Message tile
 class MessageTile extends StatelessWidget {
   final String message;
   final bool isMe;
   final VoidCallback onTap;
 
-  const MessageTile(
-      {required this.message, required this.isMe, required this.onTap});
+  const MessageTile({required this.message, required this.isMe, required this.onTap});
 
+  @override
   Widget build(BuildContext context) {
     return Container(
       padding: EdgeInsets.only(
-          top: 8, bottom: 8, left: isMe ? 0 : 24, right: isMe ? 24 : 0),
+        top: 8,
+        bottom: 8,
+        left: isMe ? 0 : 24,
+        right: isMe ? 24 : 0,
+      ),
       alignment: isMe ? Alignment.centerRight : Alignment.centerLeft,
       child: Container(
         padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
         decoration: BoxDecoration(
-          borderRadius: isMe
-              ? BorderRadius.only(
-                  topLeft: Radius.circular(23),
-                  bottomLeft: Radius.circular(23),
-                  topRight: Radius.circular(23))
-              : BorderRadius.only(
-                  topRight: Radius.circular(23),
-                  bottomRight: Radius.circular(23),
-                  topLeft: Radius.circular(23)),
+          borderRadius: BorderRadius.only(
+            topLeft: Radius.circular(23),
+            bottomLeft: isMe ? Radius.circular(23) : Radius.circular(0),
+            topRight: Radius.circular(23),
+            bottomRight: !isMe ? Radius.circular(23) : Radius.circular(0),
+          ),
           color: isMe ? Colors.grey[300] : Colors.grey[300],
         ),
         child: Text(message),
@@ -166,7 +173,6 @@ class MessageTile extends StatelessWidget {
   }
 }
 
-// Admin message tile
 class AdminMessageTile extends StatelessWidget {
   final String message;
 
@@ -185,9 +191,12 @@ class AdminMessageTile extends StatelessWidget {
             bottomLeft: Radius.circular(23),
             topRight: Radius.circular(23),
           ),
-          color: Colors.red[300],
+          color: Color(0xFF0F4F6C), // Luxurious color
         ),
-        child: Text(message),
+        child: Text(
+          message,
+          style: TextStyle(color: Colors.white), // Contrast color
+        ),
       ),
     );
   }

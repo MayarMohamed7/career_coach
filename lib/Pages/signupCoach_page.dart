@@ -1,5 +1,7 @@
 import 'dart:typed_data';
 
+import 'package:career_coach/Pages/coachHome.dart';
+import 'package:career_coach/Pages/login_page.dart';
 import 'package:career_coach/Pages/profileCoach.dart';
 import 'package:career_coach/resources/auth_methods.dart';
 import 'package:career_coach/resources/storage_methods.dart';
@@ -21,6 +23,8 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
   final TextEditingController _yearsofExpController =TextEditingController();
   final TextEditingController _phoneController =TextEditingController();
    Uint8List?  _image ;
+    bool _isLoading = false;
+
     final StorageMethods _storageMethods = StorageMethods(); 
 
    //bool _isLoading = false;
@@ -184,9 +188,12 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
                     labelText: 'Password',
                   ),
                 ),
-                const SizedBox(height: 20),
+                SizedBox(height: 20),
                 ElevatedButton(
                    onPressed: () async {
+                      setState(() {
+                      _isLoading = true;
+                    }); 
     String? signUpResult = await AuthService().signUpCoachWithEmailAndPassword(
       email: _emailController.text,
       password: _passwordController.text,
@@ -194,7 +201,7 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
       lastName: _lastnameController.text,
       phoneNumber: _phoneController.text,
       yearsOfExperience: _yearsofExpController.text,
-      profilePicture: _image!,
+      profilePicture: _image,
    
 
     );
@@ -203,21 +210,32 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
     if (signUpResult == null) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const ProfilePageCoach()),
+        MaterialPageRoute(builder: (context) => CoachHome()),
       );
     } else {
       // Signup failed, show an error message or handle the error
-      print("Signup failed: $signUpResult");
-    }
-  },
+    // Signup failed, show an error message or handle the error
+                      print("Signup failed: $signUpResult");
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(signUpResult),
+                          backgroundColor: Colors.red,
+                          duration: const Duration(seconds: 5), 
+                        ),
+                      );
+                    }
+                  }, // Show "Sign Up" text otherwise
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff0f4f6c),
                     foregroundColor: Colors.white,
+                       fixedSize: Size(200, 50),
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(32.0),
                     ),
                   ),
-                  child: const Text('Sign Up'),
+                 child: _isLoading
+                      ? const CircularProgressIndicator() // Show progress indicator when loading
+                      : const Text('Sign Up'),
                 ),
                 const SizedBox(height: 10),
               ],
