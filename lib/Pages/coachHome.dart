@@ -1,3 +1,4 @@
+import 'package:career_coach/Pages/Coachnotifications.dart';
 import 'package:career_coach/Pages/chat.dart';
 import 'package:career_coach/Pages/firebase_messaging.dart';
 import 'package:career_coach/Pages/DetailsCoach.dart';
@@ -31,7 +32,7 @@ class _HomePageState extends State<CoachHome> {
     if (index == 3) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const ProfilePageCoach()),
+        MaterialPageRoute(builder: (context) =>  ProfilePageUser()),
       );
     } 
     else if (index == 1) {
@@ -44,7 +45,7 @@ class _HomePageState extends State<CoachHome> {
     else if (index == 2) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const NotificationsPage()),
+        MaterialPageRoute(builder: (context) => const CoachNotificationsPage()),
       );
       
     }

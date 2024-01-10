@@ -1,3 +1,5 @@
+import 'package:career_coach/Pages/Coachnotifications.dart';
+import 'package:career_coach/Pages/coachHome.dart';
 import 'package:career_coach/Pages/reserveeDetails.dart';
 import 'package:career_coach/models/Session.dart';
 import 'package:career_coach/providers/sessions_provider.dart';
@@ -11,9 +13,8 @@ import 'package:career_coach/Pages/chatPage.dart';
 import 'package:career_coach/Pages/home.dart';
 import 'package:career_coach/Pages/firebase_messaging.dart';
 import 'package:career_coach/Pages/payment_page.dart';
-import 'package:career_coach/Pages/profileUser.dart';
 import 'package:career_coach/utils/utils.dart';
-import 'package:career_coach/Pages/menu.dart';
+import 'package:career_coach/Pages/DetailsCoach.dart';
 
 class mySessions extends ConsumerStatefulWidget {
   const mySessions({Key? key});
@@ -24,6 +25,40 @@ class mySessions extends ConsumerStatefulWidget {
 
 class _mySessionsState extends ConsumerState<mySessions> {
   String coachId = FirebaseAuth.instance.currentUser!.uid;
+int _currentIndex = 0;
+
+  void onTabTapped(int index) {
+    setState(() {
+      _currentIndex = index;
+    });
+    if (index == 3) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  ProfilePageUser()),
+      );
+    } 
+    else if (index == 1) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) =>  ChatScreen()),
+      );
+      
+    }
+    else if (index == 2) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CoachNotificationsPage()),
+      );
+      
+    }
+    else if (index == 0) {
+      Navigator.push(
+        context,
+        MaterialPageRoute(builder: (context) => const CoachHome()),
+      );
+      
+    }
+  }
 
   @override
   void initState() {
@@ -220,6 +255,35 @@ class _mySessionsState extends ConsumerState<mySessions> {
             ),
           ],
         ),
+     
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        backgroundColor: const Color(0xff0f4f6c),
+        selectedItemColor: Colors.white,
+        unselectedItemColor: Colors.white,
+        type: BottomNavigationBarType.fixed,
+        showSelectedLabels: false,
+        showUnselectedLabels: false,
+        currentIndex: _currentIndex,
+        onTap: onTabTapped,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'Home',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.message),
+            label: 'Messages',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.notifications),
+            label: 'Notifications',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.account_circle),
+            label: 'Account',
+          ),
+        ],
       ),
     );
   }

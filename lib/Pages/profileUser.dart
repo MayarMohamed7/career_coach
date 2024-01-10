@@ -1,7 +1,6 @@
 import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
@@ -10,9 +9,10 @@ import 'package:career_coach/Pages/login_page.dart';
 import 'package:career_coach/resources/storage_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-
 import 'menu.dart';
+
+
+
 class ProfilePageUser extends StatefulWidget {
 
    const ProfilePageUser({super.key}) ; 
@@ -304,7 +304,7 @@ String? _Profileimage;
         color: Colors.transparent,
         child: InkWell(
           onTap: () {},
-          child: Center(
+          child: Center( 
             child: Icon(
               icon,
               size: 30,
