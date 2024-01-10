@@ -188,6 +188,30 @@ class _SignupPageCoachState extends State<SignupPageCoach> {
                     labelText: 'Password',
                   ),
                 ),
+                const SizedBox(height: 10),
+                  Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: <Widget>[
+                    const Text('Already have an account?'),
+                    const SizedBox(width: 10),
+                    GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const loginPage()),
+                        );
+                      },
+                      child: const Text(
+                        'Login',
+                        style: TextStyle(
+                          color: Color(0xff0f4f6c),
+                          decoration: TextDecoration.underline,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
                 SizedBox(height: 20),
                 ElevatedButton(
                    onPressed: () async {
