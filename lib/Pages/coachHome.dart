@@ -1,8 +1,9 @@
 import 'package:career_coach/Pages/chat.dart';
 import 'package:career_coach/Pages/firebase_messaging.dart';
-import 'package:career_coach/Pages/menu.dart';
+import 'package:career_coach/Pages/DetailsCoach.dart';
 import 'package:career_coach/Pages/mySessions.dart';
 import 'package:career_coach/Pages/newSession.dart';
+import 'package:career_coach/Pages/profileCoach.dart';
 import 'package:flutter/material.dart';
 
 class CoachHome extends StatefulWidget {
@@ -30,7 +31,7 @@ class _HomePageState extends State<CoachHome> {
     if (index == 3) {
       Navigator.push(
         context,
-        MaterialPageRoute(builder: (context) => const CoachHome()),
+        MaterialPageRoute(builder: (context) => const ProfilePageCoach()),
       );
     } 
     else if (index == 1) {
@@ -85,7 +86,7 @@ class _HomePageState extends State<CoachHome> {
           Container(
             decoration: BoxDecoration(
               image: DecorationImage(
-                image: AssetImage('assets/images/background.jpg'),
+                image: AssetImage('assets/images/bb.png'),
                 fit: BoxFit.cover,
               ),
             ),
@@ -108,10 +109,9 @@ class _HomePageState extends State<CoachHome> {
                       ),
                       const SizedBox(height: 20),
                       Image.asset(
-                        'assets/images/welcome_image.png',
-                        height: 200,
-                        width: 200,
-                        fit: BoxFit.cover,
+                        'assets/images/carcoach.jpg',
+                      
+                        fit: BoxFit.fitWidth,
                       ),
                       const SizedBox(height: 20),
                       Text(
