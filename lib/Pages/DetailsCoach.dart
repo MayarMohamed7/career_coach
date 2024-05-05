@@ -47,7 +47,7 @@ class _DetailsPageState extends State<DetailsPage> {
             )
           ],
         ),
-        body: ListView(
+        body: ListView( 
           children: [
             buildTitleContainer(context, 'My Sessions', ( ) {
               Navigator.push(

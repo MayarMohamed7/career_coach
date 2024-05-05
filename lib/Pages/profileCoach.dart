@@ -5,21 +5,20 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:http/http.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:career_coach/Pages/profileUser.dart';
 import 'package:career_coach/Pages/login_page.dart';
 import 'package:career_coach/resources/storage_methods.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 
-import 'menu.dart';
-class ProfilePageCoach extends StatefulWidget {
+import 'DetailsCoach.dart';
+class ProfilePagecoach extends StatefulWidget {
 
-   const ProfilePageCoach({super.key}) ; 
+   const ProfilePagecoach({super.key}) ; 
   @override
-  _ProfilePageCoachState createState() => _ProfilePageCoachState();
+  _ProfilePageUserState createState() => _ProfilePageUserState();
 }
-class _ProfilePageCoachState extends State<ProfilePageCoach> {
+class _ProfilePageUserState extends State<ProfilePagecoach> {
     final StorageMethods _storageMethods = StorageMethods();
      TextEditingController _aboutController = TextEditingController();
     TextEditingController _linkController = TextEditingController();
@@ -292,6 +291,7 @@ String? _Profileimage;
         ),
       ),
     ],
+    
   );
 }
 

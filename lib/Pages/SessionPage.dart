@@ -113,7 +113,7 @@ int _currentIndex = 0;
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (context) => const ProfilePageCoach()),
+                          builder: (context) => const ProfilePagecoach()),
                     );
                   },
                   style: ElevatedButton.styleFrom(
