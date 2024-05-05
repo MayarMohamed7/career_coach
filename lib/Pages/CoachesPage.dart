@@ -168,17 +168,20 @@ class _CoachesPageState extends State<CoachesPage> {
                                   ),
                                 ),
                                 const SizedBox(height: 10),
-                                ElevatedButton(
-                                  onPressed: () {
-                                    _storageMethods.showRatingDialog(
-                                        context, coachId);
-                                  },
-                                  child: const Text('Rate Coach'),
-                                  style: ElevatedButton.styleFrom(
-                                    backgroundColor: Colors.orange,
-                                    foregroundColor: Colors.white,
-                                  ),
-                                ),
+                             
+ElevatedButton(
+  onPressed: () {
+    _storageMethods.showRatingDialog(context, coachId);
+  },
+  child: const Text('Rate Coach'),
+  style: ElevatedButton.styleFrom(
+    primary: Colors.orange, // Changed backgroundColor to primary
+    onPrimary: Colors.white, // Added onPrimary for foregroundColor
+    shape: RoundedRectangleBorder(
+      borderRadius: BorderRadius.circular(20),
+    ),
+  ),
+),
                               ],
                             ),
                           ),

@@ -36,8 +36,7 @@ User? user ;
   @override
       void initState() {
         super.initState();
-     user = FirebaseAuth.instance.currentUser;
-       
+  user = FirebaseAuth.instance.currentUser;
     _aboutController.text = aboutText;
     _linkController.text = linkText;
     getData();

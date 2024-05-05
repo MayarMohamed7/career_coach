@@ -71,7 +71,7 @@ User? user ;
   
   getData() async {
     try{
-var  snap  =await FirebaseFirestore.instance.collection('users').doc(user!.uid).get();
+var  snap  =await FirebaseFirestore.instance.collection('coaches').doc(user!.uid).get();
 userData = snap.data()!; 
 setState(() {
 });

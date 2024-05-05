@@ -160,6 +160,11 @@ In the provided code, QuerySnapshot is used to hold the result
     }
   }
 
+  Future<bool> checkAuthenticationStatus() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    bool loggedIn = prefs.getBool('loggedIn') ?? false;
+    return loggedIn;
+  }
  // Sign out
   Future<void> signOut() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -169,10 +174,5 @@ In the provided code, QuerySnapshot is used to hold the result
   }
 
 
-  Future<bool> checkAuthenticationStatus() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    bool loggedIn = prefs.getBool('loggedIn') ?? false;
-    return loggedIn;
-  }
 }
 
